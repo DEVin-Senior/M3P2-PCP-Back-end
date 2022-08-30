@@ -1,4 +1,4 @@
-package com.devinhouse.pcpbackend.models;
+package com.devinhouse.pcpbackend.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

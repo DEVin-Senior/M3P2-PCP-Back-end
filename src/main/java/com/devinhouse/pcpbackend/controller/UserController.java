@@ -1,6 +1,6 @@
 package com.devinhouse.pcpbackend.controller;
 
-import com.devinhouse.pcpbackend.models.User;
+import com.devinhouse.pcpbackend.model.User;
 import com.devinhouse.pcpbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
