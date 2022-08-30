@@ -1,5 +1,9 @@
 HELP.md
+<<<<<<< HEAD
 application.properties
+=======
+src/main/resources/application.properties
+>>>>>>> 39bc6253c5acd70da4c27de8e7dba8caa5308641
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
