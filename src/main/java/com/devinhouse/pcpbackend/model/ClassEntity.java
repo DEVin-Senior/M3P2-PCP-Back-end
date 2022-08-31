@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +33,5 @@ public class ClassEntity {
 	private LocalDate endDate;
 	@Column(name = "link_matriz")
 	private String matrixLink;
-	// TODO linkar com módulo
 
 }
