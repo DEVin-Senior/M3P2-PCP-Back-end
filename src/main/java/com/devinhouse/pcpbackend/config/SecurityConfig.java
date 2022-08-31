@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.config;
 
+import com.devinhouse.pcpbackend.common.exception.ApiException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +21,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableAuthorizationServer
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserSecurityService userSecurityService;
+
     @Override
     protected void configure(HttpSecurity http) {
 
@@ -27,19 +32,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .cors().and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw ApiException.badRequestException("Erro na configuração de segurança");
         }
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
         try {
-            authenticationManagerBuilder.inMemoryAuthentication()
-                    .withUser("0289cdf2-47d4-4bed-9e00-26f5d86fb640")
-                    .password("7f7474d0-8428-43d9-b41d-c1e59b332212")
-                    .roles("USER");
+            authenticationManagerBuilder.userDetailsService(userSecurityService)
+                    .passwordEncoder(passwordEncoder());
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw ApiException.notPermittedException("Erro em configurações de segurança");
         }
     }
 
@@ -48,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         try {
             return super.authenticationManager();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw ApiException.badRequestException("Erro na configuração de segurança");
         }
     }
 
