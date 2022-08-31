@@ -32,7 +32,7 @@ public class ClassEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -51,6 +51,14 @@ public class ClassEntity {
 	@Column(name = "matrix_link", nullable = false)
 	private String matrixLink;
 
+	@Column(name = "modules", nullable = false)
+	private Long modules;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(endDate, id, initialDate, matrixLink, modules, name, skills);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -62,12 +70,8 @@ public class ClassEntity {
 		ClassEntity other = (ClassEntity) obj;
 		return Objects.equals(endDate, other.endDate) && Objects.equals(id, other.id)
 				&& Objects.equals(initialDate, other.initialDate) && Objects.equals(matrixLink, other.matrixLink)
-				&& Objects.equals(name, other.name) && Objects.equals(skills, other.skills);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(endDate, id, initialDate, matrixLink, name, skills);
+				&& Objects.equals(modules, other.modules) && Objects.equals(name, other.name)
+				&& Objects.equals(skills, other.skills);
 	}
 
 }
