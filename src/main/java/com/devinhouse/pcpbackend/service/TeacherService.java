@@ -1,11 +1,11 @@
-package com.devinhouse.pcpbackend.services;
+package com.devinhouse.pcpbackend.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.devinhouse.pcpbackend.models.TeacherEntity;
-import com.devinhouse.pcpbackend.repositories.TeacherRepository;
+import com.devinhouse.pcpbackend.model.TeacherEntity;
+import com.devinhouse.pcpbackend.repository.TeacherRepository;
 
 @Service
 public class TeacherService {

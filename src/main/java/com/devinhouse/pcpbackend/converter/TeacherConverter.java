@@ -1,7 +1,7 @@
-package com.devinhouse.pcpbackend.converters;
+package com.devinhouse.pcpbackend.converter;
 
 import com.devinhouse.pcpbackend.dto.TeacherDto;
-import com.devinhouse.pcpbackend.models.TeacherEntity;
+import com.devinhouse.pcpbackend.model.TeacherEntity;
 
 public class TeacherConverter {
 	public static TeacherEntity converterTeacher(TeacherDto teacherDto) {

@@ -1,4 +1,4 @@
-package com.devinhouse.pcpbackend.controllers;
+package com.devinhouse.pcpbackend.controller;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.devinhouse.pcpbackend.converters.TeacherConverter;
+import com.devinhouse.pcpbackend.converter.TeacherConverter;
 import com.devinhouse.pcpbackend.dto.TeacherDto;
-import com.devinhouse.pcpbackend.models.TeacherEntity;
-import com.devinhouse.pcpbackend.services.TeacherService;
+import com.devinhouse.pcpbackend.model.TeacherEntity;
+import com.devinhouse.pcpbackend.service.TeacherService;
 
 @RestController
 @RequestMapping("/teacher")
