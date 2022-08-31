@@ -1,4 +1,4 @@
-package com.devinhouse.pcpbackend.models;
+package com.devinhouse.pcpbackend.model;
 
 import java.time.LocalDate;
 import java.util.List;
