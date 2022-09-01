@@ -1,10 +1,12 @@
 package com.devinhouse.pcpbackend.controller;
 
+import com.devinhouse.pcpbackend.common.CommonBaseTest;
 import com.devinhouse.pcpbackend.model.User;
 import com.devinhouse.pcpbackend.repository.UserRepository;
 import com.devinhouse.pcpbackend.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -21,12 +23,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
-@RunWith(SpringRunner.class)
-public class UserControllerTest {
+public class UserControllerTest extends CommonBaseTest {
 
     private static final Integer ID = 1;
     private static final String PASSWORD = "898989898989";
@@ -40,9 +41,21 @@ public class UserControllerTest {
     @Autowired
     MockMvc mvc;
 
+    private User mockUser;
+
+    @Override
+    public void setUp() {
+        mockUser = getMockUser();
+    }
+
+    @Override
+    public void noMoreInteractions() {
+
+    }
+
     @Test
     public void testSave() throws Exception {
-        BDDMockito.given(service.saveUser(Mockito.any(User.class))).willReturn(getMockUser());
+        BDDMockito.given(service.saveUser(Mockito.any(User.class))).willReturn(mockUser);
 
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(PASSWORD, EMAIL))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -58,7 +71,6 @@ public class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
-
 
     public User getMockUser() {
         User user = new User();
@@ -77,5 +89,4 @@ public class UserControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(user);
     }
-
 }
