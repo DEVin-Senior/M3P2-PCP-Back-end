@@ -2,12 +2,13 @@ package com.devinhouse.pcpbackend.common;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 public abstract class CommonBaseTest {
 
     /**
@@ -25,5 +26,14 @@ public abstract class CommonBaseTest {
      */
     @After
     public abstract void noMoreInteractions();
+
+    /**
+     * Método genérico que pode ser utilizado ao fim de cada teste para deletar todos os dados do repositório.
+     * <p>
+     * @param repository repositório da entidade que terá os dados apagados.
+     */
+    public void tearDown(JpaRepository repository){
+        repository.deleteAll();
+    }
 
 }
