@@ -1,21 +1,17 @@
 package com.devinhouse.pcpbackend.controller;
 
 import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.repository.UserRepository;
-import com.devinhouse.pcpbackend.service.UserService;
+import com.devinhouse.pcpbackend.service.UserEntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,7 +31,7 @@ public class UserControllerTest {
     private static final String URL = "/loginRegister";
 
     @MockBean
-    UserService service;
+    UserEntityService service;
 
     @Autowired
     MockMvc mvc;
