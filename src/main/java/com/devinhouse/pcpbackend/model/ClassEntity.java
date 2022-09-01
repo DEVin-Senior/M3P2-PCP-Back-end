@@ -30,44 +30,48 @@ import lombok.Setter;
 @Table(name = "class")
 public class ClassEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-    @Column(name = "initial_date", nullable = false)
-    private LocalDate initialDate;
+	@Column(name = "initial_date", nullable = false)
+	private LocalDate initialDate;
 
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
+	@Column(name = "end_date", nullable = false)
+	private LocalDate endDate;
 
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
-    @Column(name = "stack", nullable = false)
-    private List<SkillEnum> skills;
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
+	@Column(name = "stack", nullable = false)
+	private List<SkillEnum> skills;
 
-    @Column(name = "matrix_link", nullable = false)
-    private String matrixLink;
+	@Column(name = "matrix_link", nullable = false)
+	private String matrixLink;
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        ClassEntity other = (ClassEntity) obj;
-        return Objects.equals(endDate, other.endDate) && Objects.equals(id, other.id)
-                && Objects.equals(initialDate, other.initialDate) && Objects.equals(matrixLink, other.matrixLink)
-                && Objects.equals(name, other.name) && Objects.equals(skills, other.skills);
-    }
+	@Column(name = "modules", nullable = false)
+	private Long modules;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(endDate, id, initialDate, matrixLink, name, skills);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(endDate, id, initialDate, matrixLink, modules, name, skills);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClassEntity other = (ClassEntity) obj;
+		return Objects.equals(endDate, other.endDate) && Objects.equals(id, other.id)
+				&& Objects.equals(initialDate, other.initialDate) && Objects.equals(matrixLink, other.matrixLink)
+				&& Objects.equals(modules, other.modules) && Objects.equals(name, other.name)
+				&& Objects.equals(skills, other.skills);
+	}
 
 }
