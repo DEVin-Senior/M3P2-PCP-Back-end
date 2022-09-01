@@ -22,7 +22,6 @@ public class TeacherService {
 	}
 
 	public TeacherEntity update(Long id, TeacherEntity teacher) {
-
 		try {
 			TeacherEntity updatedTeacher = repository.findById(id).get();
 
@@ -45,7 +44,7 @@ public class TeacherService {
 		} catch (Exception e) {
 			throw ApiException.entityNotFoundException("Teacher", id.toString());
 		}
-		
+
 		repository.deleteById(id);
 	}
 
