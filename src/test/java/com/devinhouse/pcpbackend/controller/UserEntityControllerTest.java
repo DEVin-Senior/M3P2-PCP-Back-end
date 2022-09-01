@@ -1,6 +1,6 @@
 package com.devinhouse.pcpbackend.controller;
 
-import com.devinhouse.pcpbackend.model.User;
+import com.devinhouse.pcpbackend.model.UserEntity;
 import com.devinhouse.pcpbackend.service.UserEntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @RunWith(SpringRunner.class)
-public class UserControllerTest {
+public class UserEntityControllerTest {
 
     private static final Integer ID = 1;
     private static final String PASSWORD = "898989898989";
@@ -38,7 +38,7 @@ public class UserControllerTest {
 
     @Test
     public void testSave() throws Exception {
-        BDDMockito.given(service.saveUser(Mockito.any(User.class))).willReturn(getMockUser());
+        BDDMockito.given(service.saveUserEntity(Mockito.any(UserEntity.class))).willReturn(getMockUserEntity());
 
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(PASSWORD, EMAIL))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -48,7 +48,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testSaveInvalidUser() throws Exception {
+    public void testSaveInvalidUserEntity() throws Exception {
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload( "email", PASSWORD))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -56,8 +56,8 @@ public class UserControllerTest {
     }
 
 
-    public User getMockUser() {
-        User user = new User();
+    public UserEntity getMockUserEntity() {
+        UserEntity user = new UserEntity();
         user.setId(ID);
         user.setPassword(PASSWORD);
         user.setEmail(EMAIL);
@@ -66,7 +66,7 @@ public class UserControllerTest {
     }
 
     public String getJsonPayload(String password,  String email) throws JsonProcessingException {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setPassword(password);
         user.setEmail(email);
 

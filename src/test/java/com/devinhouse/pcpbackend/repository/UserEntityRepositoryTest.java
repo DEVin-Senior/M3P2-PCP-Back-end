@@ -1,6 +1,6 @@
 package com.devinhouse.pcpbackend.repository;
 
-import com.devinhouse.pcpbackend.model.User;
+import com.devinhouse.pcpbackend.model.UserEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,34 +15,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UserRepositoryTest {
+public class UserEntityRepositoryTest {
 
     @Autowired
-    UserRepository userRepository;
+    UserEntityRepository userEntityRepository;
 
     @Before
     public void setUp() {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setId(1);
         user.setPassword("123456");
         user.setEmail("test@test.com");
         
-        userRepository.save(user);
+        userEntityRepository.save(user);
     }
 
     @After
     public void tearDown() {
-        userRepository.deleteAll();
+        userEntityRepository.deleteAll();
     }
 
     @Test
-    public void testSaveUser() {
-        User user2 = new User();
+    public void testSaveUserEntity() {
+        UserEntity user2 = new UserEntity();
         user2.setId(1);
         user2.setPassword("123456");
         user2.setEmail("test@test.com");
 
-        User response = userRepository.save(user2);
+        UserEntity response = userEntityRepository.save(user2);
 
         assertNotNull(response);
     }
@@ -50,7 +50,7 @@ public class UserRepositoryTest {
     @Test
     public void testFindByEmail() {
 
-        Optional<User> response = userRepository.findByEmail("test@test.com");
+        Optional<UserEntity> response = userEntityRepository.findByEmail("test@test.com");
 
         assertTrue(response.isPresent());
         assertEquals("test@test.com", response.get().getEmail());

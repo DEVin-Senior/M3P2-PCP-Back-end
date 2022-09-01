@@ -1,7 +1,7 @@
 package com.devinhouse.pcpbackend.service;
 
-import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.repository.UserRepository;
+import com.devinhouse.pcpbackend.model.UserEntity;
+import com.devinhouse.pcpbackend.repository.UserEntityRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -19,34 +19,34 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserEntityServiceTest {
 
     @Mock
-    UserRepository userRepository;
+    UserEntityRepository userEntityRepository;
 
     @InjectMocks
     UserEntityService service;
 
     @Test
-    public void testSaveUser() {
-        User user = new User();
+    public void testSaveUserEntity() {
+        UserEntity user = new UserEntity();
         user.setEmail("test@test.com");
         user.setPassword("1234567");
-        Mockito.when(userRepository.save(user)).thenReturn(user);
+        Mockito.when(userEntityRepository.save(user)).thenReturn(user);
 
-        User userResult = service.saveUser(user);
+        UserEntity userResult = service.saveUserEntity(user);
 
         assertNotNull(userResult);
     }
 
     @Test
-    public void testDeleteUserById() {
-        User user = new User();
+    public void testDeleteUserEntityById() {
+        UserEntity user = new UserEntity();
         user.setEmail("test@test.com");
         user.setPassword("1234567");
         user.setId(1);
-        BDDMockito.willDoNothing().given(userRepository).deleteById(1);
+        BDDMockito.willDoNothing().given(userEntityRepository).deleteById(1);
 
         service.deleteById(1);
 
-        Mockito.verify(userRepository, Mockito.times(1)).deleteById(1);
+        Mockito.verify(userEntityRepository, Mockito.times(1)).deleteById(1);
     }
 
 }
