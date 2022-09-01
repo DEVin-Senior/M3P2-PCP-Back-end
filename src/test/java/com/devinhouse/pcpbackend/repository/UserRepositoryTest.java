@@ -1,5 +1,6 @@
 package com.devinhouse.pcpbackend.repository;
 
+import com.devinhouse.pcpbackend.common.CommonBaseTest;
 import com.devinhouse.pcpbackend.model.User;
 import org.junit.After;
 import org.junit.Before;
@@ -13,14 +14,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class UserRepositoryTest {
+public class UserRepositoryTest extends CommonBaseTest {
 
     @Autowired
     UserRepository userRepository;
 
-    @Before
+    @Override
     public void setUp() {
         User user = new User();
         user.setId(1);
@@ -30,9 +29,14 @@ public class UserRepositoryTest {
         userRepository.save(user);
     }
 
+    @Override
+    public void noMoreInteractions() {
+
+    }
+
     @After
-    public void tearDown() {
-        userRepository.deleteAll();
+    public void after(){
+        tearDown(userRepository);
     }
 
     @Test
