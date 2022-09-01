@@ -1,7 +1,11 @@
 package com.devinhouse.pcpbackend.service;
 
 import com.devinhouse.pcpbackend.model.UserEntity;
+<<<<<<< HEAD
 import com.devinhouse.pcpbackend.repository.UserRepository;
+=======
+import com.devinhouse.pcpbackend.repository.UserEntityRepository;
+>>>>>>> all-backend-08
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -19,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserEntityServiceTest {
 
     @Mock
+<<<<<<< HEAD
     UserRepository userRepository;
 
     @InjectMocks
@@ -47,6 +52,36 @@ public class UserEntityServiceTest {
         service.deleteById(1);
 
         Mockito.verify(userRepository, Mockito.times(1)).deleteById(1);
+=======
+    UserEntityRepository userEntityRepository;
+
+    @InjectMocks
+    UserEntityService service;
+
+    @Test
+    public void testSaveUserEntity() {
+        UserEntity user = new UserEntity();
+        user.setEmail("test@test.com");
+        user.setPassword("1234567");
+        Mockito.when(userEntityRepository.save(user)).thenReturn(user);
+
+        UserEntity userResult = service.saveUserEntity(user);
+
+        assertNotNull(userResult);
+    }
+
+    @Test
+    public void testDeleteUserEntityById() {
+        UserEntity user = new UserEntity();
+        user.setEmail("test@test.com");
+        user.setPassword("1234567");
+        user.setId(1);
+        BDDMockito.willDoNothing().given(userEntityRepository).deleteById(1);
+
+        service.deleteById(1);
+
+        Mockito.verify(userEntityRepository, Mockito.times(1)).deleteById(1);
+>>>>>>> all-backend-08
     }
 
 }

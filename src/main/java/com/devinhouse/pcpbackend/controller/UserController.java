@@ -1,9 +1,8 @@
 package com.devinhouse.pcpbackend.controller;
 
 import com.devinhouse.pcpbackend.common.exception.ApiException;
-import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.repository.UserRepository;
-import com.devinhouse.pcpbackend.service.UserService;
+import com.devinhouse.pcpbackend.model.UserEntity;
+import com.devinhouse.pcpbackend.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,13 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserEntityService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void loginRegister(@RequestBody @Valid User user) {
+    public void loginRegister(@RequestBody @Valid UserEntity user) {
         try {
-            userService.saveUser(user);
+            userService.saveUserEntity(user);
         } catch (Exception e) {
             throw ApiException.badRequestException("Erro ao salvar usuário");
         }

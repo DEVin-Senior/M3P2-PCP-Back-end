@@ -1,19 +1,19 @@
 package com.devinhouse.pcpbackend.service;
 
 import com.devinhouse.pcpbackend.common.exception.ApiException;
-import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.repository.UserRepository;
+import com.devinhouse.pcpbackend.model.UserEntity;
+import com.devinhouse.pcpbackend.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserEntityService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserEntityRepository userRepository;
 
-    public User saveUser(User user){
+    public UserEntity saveUserEntity(UserEntity user){
         try {
             return userRepository.save(user);
         }catch (Exception e){

@@ -1,8 +1,8 @@
 package com.devinhouse.pcpbackend.config;
 
 import com.devinhouse.pcpbackend.common.exception.ApiException;
-import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.repository.UserRepository;
+import com.devinhouse.pcpbackend.model.UserEntity;
+import com.devinhouse.pcpbackend.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +12,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class UserSecurityService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserEntityRepository userEntityRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        User user = userRepository.findByEmail(email)
+        UserEntity user = userEntityRepository.findByEmail(email)
                 .orElseThrow(() -> ApiException.entityNotFoundException(email));
 
         return org.springframework.security.core.userdetails.User
