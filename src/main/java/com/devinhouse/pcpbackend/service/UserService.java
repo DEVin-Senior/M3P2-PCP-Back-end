@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.model.User;
 import com.devinhouse.pcpbackend.repository.UserRepository;
@@ -17,7 +19,7 @@ public class UserService {
         try {
             return userRepository.save(user);
         }catch (Exception e){
-            throw ApiException.badRequestException("Erro ao salvar no banco de dados");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_PERSIST_DATA, "Usuário", e.getMessage()));
         }
 
     }
@@ -26,7 +28,7 @@ public class UserService {
         try {
             userRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw ApiException.badRequestException("Não foi possível deletar usuário");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_DELETE_DATA, "Usuário", e.getMessage()));
         }
     }
 
