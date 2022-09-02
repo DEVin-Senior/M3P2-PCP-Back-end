@@ -1,5 +1,6 @@
 package com.devinhouse.pcpbackend.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,10 +46,10 @@ public class TeacherEntity {
     @ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
     @JoinTable(name = "skill")
     @Enumerated(EnumType.STRING)
-    private List<SkillEnum> skills;
+    private List<SkillEnum> skills = new ArrayList<>();
 
     @Column(nullable = false)
-    private Boolean archived;
+    private Boolean archived = false;
 
     @Override
     public boolean equals(Object o) {
