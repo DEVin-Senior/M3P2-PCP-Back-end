@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.config;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .cors().and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 
@@ -43,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .passwordEncoder(passwordEncoder());
 
         } catch (Exception e) {
-            throw ApiException.notPermittedException("Erro em configurações de segurança");
+            throw ApiException.notPermittedException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 
@@ -52,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         try {
             return super.authenticationManager();
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 

@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.config;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,7 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                     .antMatchers("/deleteClass").hasRole("ADMIN")
                     .antMatchers("/user").permitAll();
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 
