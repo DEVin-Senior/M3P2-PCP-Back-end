@@ -1,10 +1,8 @@
 package com.devinhouse.pcpbackend.controller;
 
-import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
-import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
-import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.service.UserService;
+import com.devinhouse.pcpbackend.model.UserEntity;
+import com.devinhouse.pcpbackend.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +14,16 @@ import javax.validation.Valid;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserEntityService userService;
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(HttpStatus.CREATED)
-    public void loginRegister(@RequestBody @Valid User user) {
+    public void loginRegister(@RequestBody @Valid UserEntity user) {
         try {
-            userService.saveUser(user);
-        } catch (Exception e) {
-            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_CREATE_OBJECT, "Usuário", e.getMessage()));
+            userService.saveUserEntity(user);
+        } catch (ApiException e) {
+            throw ApiException.badRequestException("Erro ao salvar usuário");
         }
     }
 
