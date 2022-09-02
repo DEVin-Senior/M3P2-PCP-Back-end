@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Data
@@ -18,7 +19,7 @@ public class UserEntity {
     private Integer id;
 
     @Email(message = "Email inválido")
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Length(min=6, message="A senha deve conter no mínimo 6 caracteres")

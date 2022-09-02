@@ -17,11 +17,12 @@ public class UserController {
     UserEntityService userService;
 
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(HttpStatus.CREATED)
     public void loginRegister(@RequestBody @Valid UserEntity user) {
         try {
             userService.saveUserEntity(user);
-        } catch (Exception e) {
+        } catch (ApiException e) {
             throw ApiException.badRequestException("Erro ao salvar usuário");
         }
     }
