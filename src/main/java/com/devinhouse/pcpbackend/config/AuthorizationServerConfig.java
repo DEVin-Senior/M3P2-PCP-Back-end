@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.config;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,11 +13,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -47,7 +46,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .accessTokenConverter(accessTokenConverter())
                     .authenticationManager(authenticationManager);
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 
@@ -59,7 +58,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .authorizedGrantTypes("password")
                     .accessTokenValiditySeconds(72000);
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 }

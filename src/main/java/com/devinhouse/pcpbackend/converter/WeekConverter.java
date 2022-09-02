@@ -6,6 +6,8 @@ import com.devinhouse.pcpbackend.model.WeekEntity;
 
 public class WeekConverter {
 
+    private WeekConverter(){}
+
     // criar objeto week com os dados do week dto que veio no request
     public static WeekEntity converterWeek(WeekDto weekDto){
         WeekEntity week = new WeekEntity();

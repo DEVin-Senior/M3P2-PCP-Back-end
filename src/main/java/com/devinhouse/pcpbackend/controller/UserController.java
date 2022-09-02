@@ -1,8 +1,9 @@
 package com.devinhouse.pcpbackend.controller;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.model.User;
-import com.devinhouse.pcpbackend.repository.UserRepository;
 import com.devinhouse.pcpbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class UserController {
         try {
             userService.saveUser(user);
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro ao salvar usuário");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_CREATE_OBJECT, "Usuário", e.getMessage()));
         }
     }
 
