@@ -14,11 +14,11 @@ public class UserEntityService {
     private UserEntityRepository userRepository;
 
     public UserEntity saveUserEntity(UserEntity user){
-        try {
-            return userRepository.save(user);
-        }catch (Exception e){
-            throw ApiException.badRequestException("Erro ao salvar no banco de dados");
+        Boolean exists = userRepository.existsByEmail(user.getEmail());
+        if(exists){
+            throw ApiException.notPermittedException("Usuário já cadastrado com o email: " + user.getEmail());
         }
+        return userRepository.save(user);
 
     }
 

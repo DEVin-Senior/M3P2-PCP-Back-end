@@ -4,6 +4,7 @@ import com.devinhouse.pcpbackend.model.UserEntity;
 import com.devinhouse.pcpbackend.service.UserEntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -17,9 +18,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 @RunWith(SpringRunner.class)
 public class UserEntityControllerTest {
@@ -36,9 +37,12 @@ public class UserEntityControllerTest {
     @Autowired
     MockMvc mvc;
 
+
     @Test
     public void testSave() throws Exception {
+
         BDDMockito.given(service.saveUserEntity(Mockito.any(UserEntity.class))).willReturn(getMockUserEntity());
+
 
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(PASSWORD, EMAIL))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -49,13 +53,13 @@ public class UserEntityControllerTest {
 
     @Test
     public void testSaveInvalidUserEntity() throws Exception {
+
         mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload( "email", PASSWORD))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
-
-
+    
     public UserEntity getMockUserEntity() {
         UserEntity user = new UserEntity();
         user.setId(ID);
@@ -73,5 +77,4 @@ public class UserEntityControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(user);
     }
-
 }

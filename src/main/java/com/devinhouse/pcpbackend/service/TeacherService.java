@@ -22,13 +22,11 @@ public class TeacherService {
 
 	public TeacherEntity update(Long id, TeacherEntity teacher) {
 		TeacherEntity updatedTeacher = repository.findById(id).get();
-
 		updatedTeacher.setName(teacher.getName());
 		updatedTeacher.setPhone(teacher.getPhone());
 		updatedTeacher.setEmail(teacher.getEmail());
 		updatedTeacher.setSkills(teacher.getSkills());
 		updatedTeacher.setArchived(teacher.getArchived());
-
 		return repository.save(updatedTeacher);
 	}
 
