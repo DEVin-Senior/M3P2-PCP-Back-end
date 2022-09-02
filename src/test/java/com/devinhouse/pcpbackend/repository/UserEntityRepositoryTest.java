@@ -37,22 +37,10 @@ public class UserEntityRepositoryTest {
     }
 
     @Test
-    public void testSaveUser() {
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1);
-        userEntity2.setPassword("123456");
-        userEntity2.setEmail("test@test.com");
-
-        UserEntity response = userEntityRepository.save(userEntity2);
-        assertNotNull(response);
-    }
-
-    @Test
-    public void testSaveUserEntity() {
+    public void testSaveUserEntityReturningNotNull() {
         UserEntity user2 = new UserEntity();
-        user2.setId(1);
         user2.setPassword("123456");
-        user2.setEmail("test@test.com");
+        user2.setEmail("test3@test.com");
 
         UserEntity response = userEntityRepository.save(user2);
 

@@ -4,7 +4,6 @@ import com.devinhouse.pcpbackend.model.UserEntity;
 import com.devinhouse.pcpbackend.service.UserEntityService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -18,10 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@AutoConfigureMockMvc(addFilters = false)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 public class UserEntityControllerTest {
 
@@ -35,16 +34,15 @@ public class UserEntityControllerTest {
     UserEntityService service;
 
     @Autowired
-    MockMvc mvc;
-
+    private MockMvc mockMvc;
 
     @Test
-    public void testSave() throws Exception {
+    public void testSaveUserEntityController() throws Exception {
 
         BDDMockito.given(service.saveUserEntity(Mockito.any(UserEntity.class))).willReturn(getMockUserEntity());
 
 
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(PASSWORD, EMAIL))
+        mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(PASSWORD, EMAIL))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
@@ -52,9 +50,9 @@ public class UserEntityControllerTest {
     }
 
     @Test
-    public void testSaveInvalidUserEntity() throws Exception {
+    public void testSaveInvalidUserEntityController() throws Exception {
 
-        mvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload( "email", PASSWORD))
+        mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload( "email", PASSWORD))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
@@ -62,7 +60,6 @@ public class UserEntityControllerTest {
     
     public UserEntity getMockUserEntity() {
         UserEntity user = new UserEntity();
-        user.setId(ID);
         user.setPassword(PASSWORD);
         user.setEmail(EMAIL);
 
