@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.config;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .accessTokenConverter(accessTokenConverter())
                     .authenticationManager(authenticationManager);
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
     }
 
@@ -63,8 +65,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .authorizedGrantTypes("password")
                     .accessTokenValiditySeconds(72000);
         } catch (Exception e) {
-            throw ApiException.badRequestException("Erro na configuração de segurança");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
         }
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.applyPermitDefaultValues();
+
+        source.registerCorsConfiguration("/oauth/token", config);
+        CorsFilter filter = new CorsFilter(source);
+        security.addTokenEndpointAuthenticationFilter(filter);
     }
 
     @Override

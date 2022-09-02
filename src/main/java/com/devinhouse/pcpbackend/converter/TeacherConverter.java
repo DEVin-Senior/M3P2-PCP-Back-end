@@ -4,6 +4,9 @@ import com.devinhouse.pcpbackend.dto.TeacherDto;
 import com.devinhouse.pcpbackend.model.TeacherEntity;
 
 public class TeacherConverter {
+
+	private TeacherConverter() {}
+
 	public static TeacherEntity converterTeacher(TeacherDto teacherDto) {
 		TeacherEntity teacher = new TeacherEntity();
 

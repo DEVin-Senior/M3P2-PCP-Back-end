@@ -3,6 +3,9 @@ package com.devinhouse.pcpbackend.common.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
+
 public class ApiException extends ResponseStatusException {
 
     public ApiException(HttpStatus status) {
@@ -26,11 +29,11 @@ public class ApiException extends ResponseStatusException {
     }
 
     public static ApiException entityNotFoundException(String entity, String id) {
-        return new ApiException(String.format("Entity '%s' with id = '%s' not found", entity, id), HttpStatus.NOT_FOUND);
+        return new ApiException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ENTITY_NOT_FOUND_BY_ID, entity, id), HttpStatus.NOT_FOUND);
     }
 
     public static ApiException entityNotFoundException(String entity) {
-        return new ApiException(String.format("Entity '%s' not found", entity), HttpStatus.NOT_FOUND);
+        return new ApiException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ENTITY_NOT_FOUND, entity), HttpStatus.NOT_FOUND);
     }
 
     public static ApiException badRequestException(String msg) {
@@ -42,6 +45,6 @@ public class ApiException extends ResponseStatusException {
     }
 
     public static ApiException missingParameterException(String parameter) {
-        return new ApiException(String.format("Parameters [%s] is missing.", parameter), HttpStatus.FORBIDDEN);
+        return new ApiException(DefaultMessageHelper.getMessage(DefaultMessageConstants.PARAMS_MISSING, parameter), HttpStatus.FORBIDDEN);
     }
 }

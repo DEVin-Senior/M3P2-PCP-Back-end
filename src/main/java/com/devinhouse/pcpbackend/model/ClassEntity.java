@@ -1,6 +1,7 @@
 package com.devinhouse.pcpbackend.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,7 +47,7 @@ public class ClassEntity {
 	@Enumerated(EnumType.STRING)
 	@ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
 	@Column(name = "stack", nullable = false)
-	private List<SkillEnum> skills;
+	private List<SkillEnum> skills = new ArrayList<>();
 
 	@Column(name = "matrix_link", nullable = false)
 	private String matrixLink;
