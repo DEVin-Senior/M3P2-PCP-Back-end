@@ -39,7 +39,7 @@ public class UserEntityRepositoryTest {
     @Test
     public void testSaveUserEntityReturningNotNull() {
         UserEntity user2 = new UserEntity();
-        user2.setPassword("123456");
+        user2.setPassword("1234563");
         user2.setEmail("test3@test.com");
 
         UserEntity response = userEntityRepository.save(user2);
