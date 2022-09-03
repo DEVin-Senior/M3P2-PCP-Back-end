@@ -5,6 +5,7 @@ import com.devinhouse.pcpbackend.converter.WeekConverter;
 import com.devinhouse.pcpbackend.dto.WeekDto;
 import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.service.WeekService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,11 +16,8 @@ import java.util.List;
 @RequestMapping("/week")
 public class WeekController {
 
-    private final WeekService service;
-
-    public WeekController(WeekService service) {
-        this.service = service;
-    }
+    @Autowired
+    WeekService service;
 
     @PostMapping
     public WeekEntity insert(@RequestBody @Valid WeekDto weekDto) {
