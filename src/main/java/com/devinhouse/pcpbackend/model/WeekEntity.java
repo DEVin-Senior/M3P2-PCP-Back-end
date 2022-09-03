@@ -1,11 +1,16 @@
 package com.devinhouse.pcpbackend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -13,7 +18,7 @@ import java.time.LocalDate;
 public class WeekEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -26,8 +31,15 @@ public class WeekEntity {
     @JoinColumn(name = "teacher_id")
     private TeacherEntity teacherEntity;
 
-    //@OneToOne
-    //private ModuleEntity moduleEntity;
-    private Long moduleId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WeekEntity that)) return false;
+        return getId().equals(that.getId()) && getContent().equals(that.getContent()) && getInitialDate().equals(that.getInitialDate()) && getTeacherEntity().equals(that.getTeacherEntity());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getContent(), getInitialDate(), getTeacherEntity());
+    }
 }
