@@ -1,6 +1,8 @@
 package com.devinhouse.pcpbackend.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -28,12 +30,14 @@ public class TeacherServiceTest extends CommonBaseTest {
     TeacherService teacherService;
 
     private TeacherEntity teacherEntity;
+    private TeacherEntity teacherEntityNull;
     private Long teacherId;
 
     @Override
     public void setUp() {
         teacherEntity = createTeacherEntity();
         teacherId = teacherEntity.getId();
+        teacherEntityNull = createTeacherEntityNull();
     }
 
     @Override
@@ -122,6 +126,39 @@ public class TeacherServiceTest extends CommonBaseTest {
         verify(teacherRepository).findById(teacherId);
     }
 
+    @Test
+    public void insert_shouldReturnMessageWhenObjectIsNull(){
+        //Arrange
+        when(teacherRepository.save(teacherEntityNull)).thenReturn(teacherEntityNull);
+
+        //Act
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> teacherService.insert(teacherEntityNull));
+
+        //Assert
+        assertTrue(runtimeException.getMessage().contains("Entity 'Teacher' not found"));
+    }
+
+    @Test
+    public void update_shouldReturnMessageWhenObjectIsNull() {
+        //Arrange
+        TeacherEntity teacherToUpdate = createTeacherEntity();
+        List<SkillEnum> skillsToUpdate = new ArrayList<>(teacherEntity.getSkills());
+        skillsToUpdate.add(SkillEnum.PRIMEFACES);
+        teacherToUpdate.setSkills(skillsToUpdate);
+        teacherToUpdate.setPhone("(47)98555-4444");
+
+        when(teacherRepository.findById(1L)).thenReturn(Optional.of(teacherEntity));
+        when(teacherRepository.save(teacherEntityNull)).thenReturn(teacherEntityNull);
+
+        //Act
+        RuntimeException runtimeException = assertThrows(RuntimeException.class,
+                () -> teacherService.insert(teacherEntityNull));
+
+        //Assert
+        assertTrue(runtimeException.getMessage().contains("Entity 'Teacher' not found"));
+    }
+
     private TeacherEntity createTeacherEntity() {
         TeacherEntity teacherEntity = new TeacherEntity();
         teacherEntity.setId(1L);
@@ -131,5 +168,10 @@ public class TeacherServiceTest extends CommonBaseTest {
         teacherEntity.setSkills(List.of(SkillEnum.C_SHARP, SkillEnum.JAVA, SkillEnum.JAVASCRIPT));
         teacherEntity.setArchived(Boolean.FALSE);
         return teacherEntity;
+    }
+
+    private TeacherEntity createTeacherEntityNull() {
+        TeacherEntity teacherEntityNull = null;
+        return teacherEntityNull;
     }
 }
