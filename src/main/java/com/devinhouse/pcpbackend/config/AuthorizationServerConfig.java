@@ -79,15 +79,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         CorsFilter filter = new CorsFilter(source);
         security.addTokenEndpointAuthenticationFilter(filter);
     }
-
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.applyPermitDefaultValues();
-
-        source.registerCorsConfiguration("/oauth/token", config);
-        CorsFilter filter = new CorsFilter(source);
-        security.addTokenEndpointAuthenticationFilter(filter);
-    }
 }
