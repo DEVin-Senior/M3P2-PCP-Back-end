@@ -31,7 +31,7 @@ public class ServiceException extends RuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public ServiceException entityNotFoundException(String entity){
+    public static ServiceException entityNotFoundException(String entity){
         return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ENTITY_NOT_FOUND, entity));
     }
 
