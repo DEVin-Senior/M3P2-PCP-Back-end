@@ -14,14 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
@@ -61,8 +58,6 @@ public class TeacherControllerTest extends CommonBaseTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                    ).andExpect(MockMvcResultMatchers.status().isOk());
-
-        assertTrue(true);
     }
 
     @Test
@@ -83,8 +78,6 @@ public class TeacherControllerTest extends CommonBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
         ).andExpect(MockMvcResultMatchers.status().isOk());
-
-        assertTrue(true);
     }
 
     @Test
@@ -107,8 +100,6 @@ public class TeacherControllerTest extends CommonBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
         ).andExpect(MockMvcResultMatchers.status().isOk());
-
-        assertTrue(true);
     }
 
     @Test
@@ -129,8 +120,6 @@ public class TeacherControllerTest extends CommonBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
         ).andExpect(MockMvcResultMatchers.status().isOk());
-
-        assertTrue(true);
     }
     @Test
     @DisplayName("Testa listar Teacher por Id com sucesso.")
@@ -150,7 +139,5 @@ public class TeacherControllerTest extends CommonBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
         ).andExpect(MockMvcResultMatchers.status().isOk());
-
-        assertTrue(true);
     }
 }
