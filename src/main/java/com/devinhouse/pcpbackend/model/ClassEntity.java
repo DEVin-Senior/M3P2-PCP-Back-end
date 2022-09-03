@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.devinhouse.pcpbackend.enums.SkillEnum;
 
@@ -44,9 +35,12 @@ public class ClassEntity {
 	@Column(name = "end_date", nullable = false)
 	private LocalDate endDate;
 
-	@Enumerated(EnumType.STRING)
 	@ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
-	@Column(name = "stack", nullable = false)
+	@JoinTable(
+			name = "class_skill",
+			joinColumns = @JoinColumn(name = "class_id")
+	)
+	@Enumerated(EnumType.STRING)
 	private List<SkillEnum> skills = new ArrayList<>();
 
 	@Column(name = "matrix_link", nullable = false)
@@ -54,6 +48,22 @@ public class ClassEntity {
 
 	@Column(name = "modules", nullable = false)
 	private Long modules;
+
+	@OneToMany
+	@JoinTable(
+			name = "class_to_module",
+			joinColumns = @JoinColumn(name = "class_id"),
+			inverseJoinColumns = @JoinColumn(name = "module_id")
+	)
+	private List<ModuleEntity> moduleEntityList = new ArrayList<>();
+
+	@OneToMany
+	@JoinTable(
+			name = "class_to_event",
+			joinColumns = @JoinColumn(name = "class_id"),
+			inverseJoinColumns = @JoinColumn(name = "event_id")
+	)
+	private List<EventEntity> eventEntityList = new ArrayList<>();
 
 	@Override
 	public int hashCode() {
