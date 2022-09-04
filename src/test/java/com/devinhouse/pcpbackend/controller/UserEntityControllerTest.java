@@ -26,6 +26,8 @@ public class UserEntityControllerTest {
 
     private static final Integer ID = 1;
     private static final String PASSWORD = "898989898989";
+
+    private static final String NAME = "Vincent Smith";
     private static final String EMAIL = "email@test.com";
 
     private static final String URL = "/loginRegister";
@@ -42,7 +44,7 @@ public class UserEntityControllerTest {
         BDDMockito.given(service.saveUserEntity(Mockito.any(UserEntity.class))).willReturn(getMockUserEntity());
 
 
-        mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(PASSWORD, EMAIL))
+        mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(NAME,PASSWORD, EMAIL))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
@@ -52,7 +54,7 @@ public class UserEntityControllerTest {
     @Test
     public void testSaveInvalidUserEntityController() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload( "email", PASSWORD))
+        mockMvc.perform(MockMvcRequestBuilders.post(URL).content(getJsonPayload(NAME, "email", PASSWORD))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
@@ -60,14 +62,16 @@ public class UserEntityControllerTest {
     
     public UserEntity getMockUserEntity() {
         UserEntity user = new UserEntity();
+        user.setName(NAME);
         user.setPassword(PASSWORD);
         user.setEmail(EMAIL);
 
         return user;
     }
 
-    public String getJsonPayload(String password,  String email) throws JsonProcessingException {
+    public String getJsonPayload(String name, String password,  String email) throws JsonProcessingException {
         UserEntity user = new UserEntity();
+        user.setName(name);
         user.setPassword(password);
         user.setEmail(email);
 

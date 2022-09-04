@@ -1,22 +1,10 @@
 package com.devinhouse.pcpbackend.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import com.devinhouse.pcpbackend.enums.SkillEnum;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,52 +15,52 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
 @Entity
-@Table(name = "class")
+@Table(name = "tb_class")
 public class ClassEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, length = 60)
+	@NotEmpty(message = "Nome não pode estar vazio")
 	private String name;
 
 	@Column(name = "initial_date", nullable = false)
+	@NotEmpty(message = "Data inicial não pode estar vazia")
 	private LocalDate initialDate;
 
 	@Column(name = "end_date", nullable = false)
+	@NotEmpty(message = "Data final não pode estar vazia")
 	private LocalDate endDate;
 
-	@Enumerated(EnumType.STRING)
-	@ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
-	@Column(name = "stack", nullable = false)
-	private List<SkillEnum> skills = new ArrayList<>();
+	@Column(nullable = false, length = 60)
+	@NotEmpty(message = "Stack não pode estar vazia")
+	private String stack;
 
-	@Column(name = "matrix_link", nullable = false)
+	@Column(name = "matrix_link", nullable = false, length = 80)
+	@NotEmpty(message = "Link da matriz curricular não pode estar vazia")
 	private String matrixLink;
 
-	@Column(name = "modules", nullable = false)
-	private Long modules;
+	@Column(nullable = false)
+	private boolean archive;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(endDate, id, initialDate, matrixLink, modules, name, skills);
-	}
+	@OneToMany
+	@JoinTable(
+			name = "class_to_module",
+			joinColumns = @JoinColumn(name = "class_id"),
+			inverseJoinColumns = @JoinColumn(name = "module_id")
+	)
+	private List<ModuleEntity> moduleEntityList;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ClassEntity other = (ClassEntity) obj;
-		return Objects.equals(endDate, other.endDate) && Objects.equals(id, other.id)
-				&& Objects.equals(initialDate, other.initialDate) && Objects.equals(matrixLink, other.matrixLink)
-				&& Objects.equals(modules, other.modules) && Objects.equals(name, other.name)
-				&& Objects.equals(skills, other.skills);
-	}
+	@OneToMany
+	@JoinTable(
+			name = "class_to_event",
+			joinColumns = @JoinColumn(name = "class_id"),
+			inverseJoinColumns = @JoinColumn(name = "event_id")
+	)
+	private List<EventEntity> eventEntityList;
 
 }
