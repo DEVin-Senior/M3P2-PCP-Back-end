@@ -11,8 +11,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModuleCreateDto {
+public class ModuleReadDto {
 
+    private Long id;
     private String name;
     private List<WeekEntity> weekEntityList;
 }

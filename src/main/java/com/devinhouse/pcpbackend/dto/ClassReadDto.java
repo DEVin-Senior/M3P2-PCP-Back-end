@@ -1,18 +1,20 @@
 package com.devinhouse.pcpbackend.dto;
 
-import com.devinhouse.pcpbackend.model.WeekEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ModuleCreateDto {
+public class ClassReadDto {
 
+    private Long id;
     private String name;
-    private List<WeekEntity> weekEntityList;
+    private LocalDate initialDate;
+    private LocalDate endDate;
+    private String stack;
 }
