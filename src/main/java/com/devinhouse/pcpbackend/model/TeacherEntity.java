@@ -16,8 +16,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+
 @Entity
-@Table(name = "teacher")
+@Table(name = "tb_teacher")
 public class TeacherEntity {
 
     @Id

@@ -13,8 +13,9 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
+
 @Entity
-@Table(name = "week")
+@Table(name = "tb_week")
 public class WeekEntity {
 
     @Id

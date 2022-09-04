@@ -14,7 +14,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Data
-@Table(name = "user")
+@Table(name = "tb_user")
 public class UserEntity {
 
     @Id
