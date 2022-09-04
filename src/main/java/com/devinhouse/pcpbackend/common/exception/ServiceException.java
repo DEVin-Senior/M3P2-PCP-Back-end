@@ -35,32 +35,28 @@ public class ServiceException extends RuntimeException {
         return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ENTITY_NOT_FOUND, entity));
     }
 
-    public ServiceException entityNotFoundByIdException(String entity, String id){
+    public static ServiceException entityNotFoundByIdException(String entity, Long id){
         return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ENTITY_NOT_FOUND_BY_ID, entity, id));
     }
 
-    public ServiceException missingParameterException(String parameter){
+    public static ServiceException missingParameterException(String parameter){
         return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.MISSING_PARAMETER, parameter));
     }
 
-    public ServiceException fieldIsRequiredException(String field){
+    public static ServiceException fieldIsRequiredException(String field){
         return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.FIELD_IS_REQUIRED, field));
     }
 
-    public ServiceException errorPersistDataException(String data){
-        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_PERSIST_DATA, data));
+    public static ServiceException errorPersistDataException(String data, String cause){
+        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_PERSIST_DATA, data, cause));
     }
 
-    public ServiceException errorUpdateDataException(String data){
-        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_UPDATE_DATA, data));
+    public static ServiceException errorUpdateDataByIdException(String data, Long id, String cause){
+        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_UPDATE_DATA_BY_ID, data, id, cause));
     }
 
-    public ServiceException errorDeleteDataException(String data){
-        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_DELETE_DATA, data));
-    }
-
-    public ServiceException errorDeleteDataByIdException(String data){
-        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_DELETE_DATA_BY_ID, data));
+    public static ServiceException errorDeleteDataByIdException(String data, Long id, String cause){
+        return new ServiceException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_DELETE_DATA_BY_ID, data, id, cause));
     }
 
 }
