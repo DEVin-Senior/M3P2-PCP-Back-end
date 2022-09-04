@@ -45,6 +45,6 @@ public class ApiException extends ResponseStatusException {
     }
 
     public static ApiException missingParameterException(String parameter) {
-        return new ApiException(DefaultMessageHelper.getMessage(DefaultMessageConstants.PARAMS_MISSING, parameter), HttpStatus.FORBIDDEN);
+        return new ApiException(DefaultMessageHelper.getMessage(DefaultMessageConstants.MISSING_PARAMETER, parameter), HttpStatus.FORBIDDEN);
     }
 }

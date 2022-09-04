@@ -4,17 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.devinhouse.pcpbackend.enums.SkillEnum;
 import lombok.AllArgsConstructor;
@@ -44,23 +34,28 @@ public class TeacherEntity {
     private String email;
 
     @ElementCollection(fetch = FetchType.LAZY, targetClass = SkillEnum.class)
-    @JoinTable(name = "skill")
+    @JoinTable(
+            name = "teacher_skill",
+            joinColumns = @JoinColumn(name = "teacher_id")
+    )
     @Enumerated(EnumType.STRING)
     private List<SkillEnum> skills = new ArrayList<>();
 
     @Column(nullable = false)
     private Boolean archived = false;
 
+    @Column(nullable = false)
+    private boolean isPaid = true;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TeacherEntity that = (TeacherEntity) o;
-        return id.equals(that.id);
+        if (!(o instanceof TeacherEntity that)) return false;
+        return isPaid() == that.isPaid() && getId().equals(that.getId()) && getName().equals(that.getName()) && getPhone().equals(that.getPhone()) && getEmail().equals(that.getEmail()) && getSkills().equals(that.getSkills()) && getArchived().equals(that.getArchived());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(getId(), getName(), getPhone(), getEmail(), getSkills(), getArchived(), isPaid());
     }
 }

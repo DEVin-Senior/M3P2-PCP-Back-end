@@ -1,7 +1,6 @@
 package com.devinhouse.pcpbackend.repository;
 
-import com.devinhouse.pcpbackend.common.CommonBaseTest;
-import com.devinhouse.pcpbackend.model.User;
+import com.devinhouse.pcpbackend.model.UserEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,39 +13,36 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserRepositoryTest extends CommonBaseTest {
+@SpringBootTest
+@RunWith(SpringRunner.class)
+public class UserEntityRepositoryTest {
 
     @Autowired
-    UserRepository userRepository;
+    UserEntityRepository userEntityRepository;
 
-    @Override
+    @Before
     public void setUp() {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setId(1);
         user.setPassword("123456");
         user.setEmail("test@test.com");
         
-        userRepository.save(user);
-    }
-
-    @Override
-    public void noMoreInteractions() {
-
+        userEntityRepository.save(user);
     }
 
     @After
-    public void after(){
-        tearDown(userRepository);
+    public void tearDown() {
+
+        userEntityRepository.deleteAll();
     }
 
     @Test
-    public void testSaveUser() {
-        User user2 = new User();
-        user2.setId(1);
-        user2.setPassword("123456");
-        user2.setEmail("test@test.com");
+    public void testSaveUserEntityReturningNotNull() {
+        UserEntity user2 = new UserEntity();
+        user2.setPassword("1234563");
+        user2.setEmail("test3@test.com");
 
-        User response = userRepository.save(user2);
+        UserEntity response = userEntityRepository.save(user2);
 
         assertNotNull(response);
     }
@@ -54,7 +50,7 @@ public class UserRepositoryTest extends CommonBaseTest {
     @Test
     public void testFindByEmail() {
 
-        Optional<User> response = userRepository.findByEmail("test@test.com");
+        Optional<UserEntity> response = userEntityRepository.findByEmail("test@test.com");
 
         assertTrue(response.isPresent());
         assertEquals("test@test.com", response.get().getEmail());
