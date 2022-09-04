@@ -32,5 +32,8 @@ public class TeacherDto {
 	@NotNull
     private Boolean archived;
 	
+	@NotNull
+	private Boolean isPaid;
+	
 }
 
