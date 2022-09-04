@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.devinhouse.pcpbackend.converter.TeacherConverter;
@@ -15,11 +16,8 @@ import com.devinhouse.pcpbackend.service.TeacherService;
 @RequestMapping("/teacher")
 public class TeacherController {
 
-	private TeacherService service;
-
-	public TeacherController(TeacherService service) {
-		this.service = service;
-	}
+	@Autowired
+	TeacherService service;
 
 	@PostMapping
 	public TeacherEntity insert(@RequestBody @Valid TeacherDto teacherDto) {
