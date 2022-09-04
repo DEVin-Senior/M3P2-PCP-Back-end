@@ -13,6 +13,7 @@ import com.devinhouse.pcpbackend.model.TeacherEntity;
 import com.devinhouse.pcpbackend.service.TeacherService;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/teacher")
 public class TeacherController {
 
