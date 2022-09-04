@@ -1,17 +1,20 @@
 package com.devinhouse.pcpbackend.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
+import java.util.Objects;
 
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Data
-@NoArgsConstructor
-@Table(name = "user")
+@Table(name = "tb_user")
 public class UserEntity {
 
     @Id
@@ -29,4 +32,15 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity that)) return false;
+        return getId().equals(that.getId()) && getName().equals(that.getName()) && getEmail().equals(that.getEmail()) && getPassword().equals(that.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getEmail(), getPassword());
+    }
 }
