@@ -45,18 +45,15 @@ public class TeacherEntity {
     @Column(nullable = false)
     private Boolean archived = false;
 
-    @Column(nullable = false)
-    private boolean isPaid = true;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TeacherEntity that)) return false;
-        return isPaid() == that.isPaid() && getId().equals(that.getId()) && getName().equals(that.getName()) && getPhone().equals(that.getPhone()) && getEmail().equals(that.getEmail()) && getSkills().equals(that.getSkills()) && getArchived().equals(that.getArchived());
+        return getId().equals(that.getId()) && getName().equals(that.getName()) && getPhone().equals(that.getPhone()) && getEmail().equals(that.getEmail()) && getSkills().equals(that.getSkills()) && getArchived().equals(that.getArchived());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getPhone(), getEmail(), getSkills(), getArchived(), isPaid());
+        return Objects.hash(getId(), getName(), getPhone(), getEmail(), getSkills(), getArchived());
     }
 }
