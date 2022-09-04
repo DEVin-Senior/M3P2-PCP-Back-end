@@ -1,7 +1,9 @@
 package com.devinhouse.pcpbackend.service;
 
 import java.util.List;
+import java.util.Objects;
 
+import com.devinhouse.pcpbackend.common.exception.ServiceException;
 import org.springframework.stereotype.Service;
 
 import com.devinhouse.pcpbackend.common.exception.ApiException;
@@ -18,10 +20,16 @@ public class TeacherService {
 	}
 
 	public TeacherEntity insert(TeacherEntity teacher) {
+		if (Objects.isNull(teacher)) {
+			throw ServiceException.entityNotFoundException("Teacher");
+		}
 		return repository.save(teacher);
 	}
 
 	public TeacherEntity update(Long id, TeacherEntity teacher) {
+		if (Objects.isNull(teacher)) {
+			throw ServiceException.entityNotFoundException("Teacher");
+		}
 		try {
 			TeacherEntity updatedTeacher = repository.findById(id).get();
 
