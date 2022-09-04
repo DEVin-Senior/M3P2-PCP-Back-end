@@ -18,6 +18,9 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
+    private String name;
+
     @Email(message = "Email inválido")
     @Column(unique = true, nullable = false)
     private String email;

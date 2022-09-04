@@ -26,6 +26,7 @@ public class UserEntityServiceTest {
     @Test
     public void testSaveUserEntity() {
         UserEntity user = new UserEntity();
+        user.setName("Grover Palmer");
         user.setEmail("teste@test.com");
         user.setPassword("1234567");
         Mockito.when(userEntityRepository.save(user)).thenReturn(user);
@@ -38,6 +39,7 @@ public class UserEntityServiceTest {
     @Test
     public void testDeleteUserEntityById() {
         UserEntity user = new UserEntity();
+        user.setName("Sean Jones");
         user.setEmail("test@test.com");
         user.setPassword("1234567");
         user.setId(1);

@@ -1,6 +1,8 @@
 package com.devinhouse.pcpbackend.controller;
 
 import com.devinhouse.pcpbackend.common.exception.ApiException;
+import com.devinhouse.pcpbackend.converter.UserConverter;
+import com.devinhouse.pcpbackend.dto.UserDto;
 import com.devinhouse.pcpbackend.model.UserEntity;
 import com.devinhouse.pcpbackend.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,9 @@ public class UserController {
     @PostMapping
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseStatus(HttpStatus.CREATED)
-    public void loginRegister(@RequestBody @Valid UserEntity user) {
+    public void loginRegister(@RequestBody @Valid UserDto userDto) {
         try {
-            userService.saveUserEntity(user);
+            userService.saveUserEntity(UserConverter.converterUser(userDto));
         } catch (ApiException e) {
             throw ApiException.badRequestException("Erro ao salvar usuário");
         }
