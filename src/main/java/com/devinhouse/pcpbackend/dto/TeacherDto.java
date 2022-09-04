@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -25,7 +26,7 @@ public class TeacherDto {
 	@Email(message = "E-mail informado inválido")
 	private String email;
 	
-	@NotNull
+	@NotEmpty
 	private List<SkillEnum> skills;
 	
 	@NotNull
