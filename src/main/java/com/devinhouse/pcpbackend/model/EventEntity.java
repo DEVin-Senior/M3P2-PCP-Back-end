@@ -13,8 +13,9 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 @Setter
+
 @Entity
-@Table(name = "event")
+@Table(name = "tb_event")
 public class EventEntity {
 
     @Id

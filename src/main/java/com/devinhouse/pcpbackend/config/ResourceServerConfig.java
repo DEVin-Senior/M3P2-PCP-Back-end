@@ -15,8 +15,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) {
         try {
-            http.authorizeRequests().antMatchers("/deleteTeacher").hasRole("ADMIN")
-                    .antMatchers("/deleteClass").hasRole("ADMIN")
+            http.authorizeRequests().antMatchers("/teacher", "/class").permitAll()
                     .antMatchers("/loginRegister").permitAll();
         } catch (Exception e) {
             throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
