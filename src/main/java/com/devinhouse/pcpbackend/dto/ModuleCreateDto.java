@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Getter
@@ -13,6 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 public class ModuleCreateDto {
 
+    @NotBlank(message = "Nome não pode estar em branco")
+    @Size(max = 60)
     private String name;
+
     private List<WeekEntity> weekEntityList;
 }

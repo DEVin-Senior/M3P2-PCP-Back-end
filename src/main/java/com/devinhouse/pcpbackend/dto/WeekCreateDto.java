@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Getter
@@ -18,7 +19,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class WeekCreateDto {
 
+    @NotBlank(message = "Content não pode estar em branco")
+    @Size(max = 60)
     private String content;
+
+    @NotNull(message = "Data não pode estar em branco")
     private LocalDate initialDate;
+
+    @NotNull(message = "Professor não pode estar em branco")
     private TeacherEntity teacherEntity;
 }
