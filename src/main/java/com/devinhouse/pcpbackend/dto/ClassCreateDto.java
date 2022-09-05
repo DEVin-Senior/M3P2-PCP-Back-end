@@ -20,7 +20,7 @@ public class ClassCreateDto {
     private LocalDate endDate;
     private String stack;
     private String matrixLink;
-    private boolean archive;
+    private Boolean archive;
     private List<ModuleEntity> moduleEntityList;
     private List<EventEntity> eventEntityList;
 }
