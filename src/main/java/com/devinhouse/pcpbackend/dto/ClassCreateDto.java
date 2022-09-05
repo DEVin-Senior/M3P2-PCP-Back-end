@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ClassCreateDto {
 
-    @NotBlank(message = "Nome não inserido")
+    @NotBlank(message = "Nome não pode estar em branco")
     @Size(max = 60)
     private String name;
 

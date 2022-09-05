@@ -16,7 +16,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassUpdateDto {
+public class ShowClassUpdateDto {
+
+    @NotNull(message = "Id não pode estar em branco")
+    private Long id;
 
     @NotBlank(message = "Nome não pode estar em branco")
     @Size(max = 60)

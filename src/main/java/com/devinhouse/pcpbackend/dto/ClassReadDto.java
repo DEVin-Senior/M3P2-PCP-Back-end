@@ -14,6 +14,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ClassReadDto {
 
+    @NotNull(message = "Id não pode estar em branco")
+    private Long id;
+
     @NotBlank(message = "Nome não pode estar em branco")
     private String name;
 
@@ -25,4 +28,6 @@ public class ClassReadDto {
 
     @NotBlank(message = "Stack não pode estar em branco")
     private String stack;
+
+    private boolean archive;
 }
