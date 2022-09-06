@@ -44,4 +44,8 @@ public class WeekController {
         return service.findById(id);
     }
 
+    @GetMapping("/dashboard")
+    public List<WeekEntity> dashboardList() {
+        return service.dashboardList(); //
+    }
 }

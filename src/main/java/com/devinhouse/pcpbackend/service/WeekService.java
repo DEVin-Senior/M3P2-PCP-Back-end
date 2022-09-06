@@ -34,4 +34,7 @@ public class WeekService {
         return repository.findById(weekId).get();
     }
 
+    public List<WeekEntity> dashboardList() {
+        return repository.dashboardList();
+    }
 }
