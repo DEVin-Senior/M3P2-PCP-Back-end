@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +24,7 @@ public class ClassEntity {
 	private Long id;
 
 	@Column(name = "name", nullable = false, length = 60)
-	@NotEmpty(message = "Nome não pode estar vazio")
+	@NotBlank(message = "Nome não pode estar vazio")
 	private String name;
 
 	@Column(name = "initial_date", nullable = false)
@@ -35,11 +36,11 @@ public class ClassEntity {
 	private LocalDate endDate;
 
 	@Column(nullable = false, length = 60)
-	@NotEmpty(message = "Stack não pode estar vazia")
+	@NotBlank(message = "Stack não pode estar vazia")
 	private String stack;
 
 	@Column(name = "matrix_link", nullable = false, length = 80)
-	@NotEmpty(message = "Link da matriz curricular não pode estar vazia")
+	@NotBlank(message = "Link da matriz curricular não pode estar vazia")
 	private String matrixLink;
 
 	@Column(nullable = false)
