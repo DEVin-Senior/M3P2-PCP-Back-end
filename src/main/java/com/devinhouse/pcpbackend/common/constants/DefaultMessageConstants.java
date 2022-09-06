@@ -13,7 +13,8 @@ public enum DefaultMessageConstants {
     ERROR_CREATE_OBJECT("Erro ao criar o %s. Causa: %s"),
     ERROR_PERSIST_DATA("Erro ao salvar o %s no banco de dados. Causa: %s"),
     ERROR_UPDATE_DATA_BY_ID("Erro ao atualizar o %s com ID %s no banco de dados. Causa: %s"),
-    ERROR_DELETE_DATA_BY_ID("Erro ao deletar o %s com ID '%s' no banco de dados. Causa: %s");
+    ERROR_DELETE_DATA_BY_ID("Erro ao deletar o %s com ID '%s' no banco de dados. Causa: %s"),
+    TEACHER_ID_IS_NOT_A_NUMBER ("Id do docente informado não é um número");
 
     private final String message;
 
