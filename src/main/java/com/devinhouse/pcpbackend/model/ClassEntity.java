@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.*;
 
@@ -26,11 +27,11 @@ public class ClassEntity {
 	private String name;
 
 	@Column(name = "initial_date", nullable = false)
-	@NotEmpty(message = "Data inicial não pode estar vazia")
+	@NotNull(message = "Data inicial não pode estar vazia")
 	private LocalDate initialDate;
 
 	@Column(name = "end_date", nullable = false)
-	@NotEmpty(message = "Data final não pode estar vazia")
+	@NotNull(message = "Data final não pode estar vazia")
 	private LocalDate endDate;
 
 	@Column(nullable = false, length = 60)
@@ -44,7 +45,7 @@ public class ClassEntity {
 	@Column(nullable = false)
 	private boolean archive;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "class_to_module",
 			joinColumns = @JoinColumn(name = "class_id"),
@@ -52,7 +53,7 @@ public class ClassEntity {
 	)
 	private List<ModuleEntity> moduleEntityList;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "class_to_event",
 			joinColumns = @JoinColumn(name = "class_id"),

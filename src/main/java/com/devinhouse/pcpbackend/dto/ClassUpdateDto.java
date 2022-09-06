@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassCreateDto {
+public class ClassUpdateDto {
 
     @NotBlank(message = "Nome não pode estar em branco")
     @Size(max = 60)

@@ -97,6 +97,11 @@
 			<artifactId>spring-security-core</artifactId>
 			<version>5.7.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 
     </dependencies>
 
