@@ -36,30 +36,32 @@ public class CourseClassController {
     public ClassReadDto classEntityToClassReadDto(ClassEntity classEntity) {
         return modelMapper.map(classEntity, ClassReadDto.class);
     }
-    
+
     public ClassEntity classEntityReadForEditDto(ClassUpdateDto classUpdateDto) {
         return modelMapper.map(classUpdateDto, ClassEntity.class);
     }
-    
+
     public ClassUpdateDto classEntityEditDto(ClassEntity classEntity) {
         return modelMapper.map(classEntity, ClassUpdateDto.class);
     }
-    
+
+/*
     @PostMapping
     public void save (@RequestBody ClassCreateDto classCreateDto) {
         var classEntity = classCreateDtoForEntity(classCreateDto);
         classService.save(classEntity);
     }
-    
-    @GetMapping
+*/
+
+/*    @GetMapping
     public ResponseEntity<List<ClassEntity>> getAllClasses () {
         return ResponseEntity.ok().body(classService.getAll());
-    }
-    
-    @PutMapping
+    }*/
+
+/*    @PutMapping
     public void update(@RequestBody ClassCreateDto createDto, @PathVariable Long id) {
-    	
-    }
+
+    }*/
 
 
 }
