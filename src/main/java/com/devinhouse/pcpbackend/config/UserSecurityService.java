@@ -19,6 +19,7 @@ public class UserSecurityService implements UserDetailsService {
         UserEntity user = userEntityRepository.findByEmail(email)
                 .orElseThrow(() -> ApiException.entityNotFoundException(email));
 
+
         return org.springframework.security.core.userdetails.User
                 .builder()
                 .username(user.getEmail())

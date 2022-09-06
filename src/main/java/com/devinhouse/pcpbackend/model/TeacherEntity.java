@@ -7,16 +7,13 @@ import java.util.Objects;
 import javax.persistence.*;
 
 import com.devinhouse.pcpbackend.enums.SkillEnum;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-
+@Builder
 @Entity
 @Table(name = "tb_teacher")
 public class TeacherEntity {

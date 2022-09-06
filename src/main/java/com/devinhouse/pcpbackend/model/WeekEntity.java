@@ -1,19 +1,17 @@
 package com.devinhouse.pcpbackend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Table(name = "tb_week")
 public class WeekEntity {
@@ -25,6 +23,7 @@ public class WeekEntity {
     @Column(nullable = false)
     private String content;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name= "initial_date", nullable = false)
     private LocalDate initialDate;
 
