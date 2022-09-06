@@ -1,28 +1,25 @@
 package com.devinhouse.pcpbackend.dto;
 
-import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.model.EventEntity;
+import com.devinhouse.pcpbackend.model.ModuleEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassReadDto {
-
-    @NotNull(message = "Id não pode estar em branco")
-    private Long id;
+public class ClassUpdateDto {
 
     @NotBlank(message = "Nome não pode estar em branco")
+    @Size(max = 60)
     private String name;
 
     @NotNull(message = "Data não pode estar em branco")
@@ -32,22 +29,15 @@ public class ClassReadDto {
     private LocalDate endDate;
 
     @NotBlank(message = "Stack não pode estar em branco")
+    @Size(max = 60)
     private String stack;
+
+    @NotBlank(message = "Link da Matriz não pode estar em branco")
+    @Size(max = 100)
+    private String matrixLink;
+
     private boolean archive;
 
-
-    public static List<ClassReadDto> converterClassEntityToDtoList(List<ClassEntity> classesEntity) {
-        List<ClassReadDto> returnValue = new ArrayList<>();
-
-        for(ClassEntity classEntity : classesEntity) {
-            ClassReadDto classModel = new ClassReadDto();
-            BeanUtils.copyProperties(classEntity, classModel);
-            returnValue.add(classModel);
-        }
-        return returnValue;
-    }
-
-
-
-
+    private List<ModuleEntity> moduleEntityList;
+    private List<EventEntity> eventEntityList;
 }
