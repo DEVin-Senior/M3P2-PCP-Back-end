@@ -22,7 +22,7 @@ public class ModuleEntity {
     private Long id;
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "module_to_week",
             joinColumns = @JoinColumn(name = "module_id"),
