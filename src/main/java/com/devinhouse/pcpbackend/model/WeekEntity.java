@@ -32,6 +32,14 @@ public class WeekEntity {
     @JoinColumn(name = "teacher_id")
     private TeacherEntity teacherEntity;
 
+    @OneToOne
+    @JoinColumn(name = "class_id")
+    private ClassEntity classEntity;
+
+    //@OneToOne
+    //@JoinColumn(name = "module_id")
+    //private ModuleEntity moduleEntity;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -21,5 +21,9 @@ public class WeekDto {
     @NotNull
     private Long teacherId;
 
+    @NotNull
+    private Long classId;
 
+    //@NotNull
+    //private Long moduleId;
 }

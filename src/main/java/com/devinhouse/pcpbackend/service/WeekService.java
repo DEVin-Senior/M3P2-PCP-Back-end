@@ -1,5 +1,6 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.dto.DashboardDto;
 import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,11 @@ public class WeekService {
     private final WeekRepository repository;
 
     public WeekService(WeekRepository repository) {
-        this.repository = repository;//
+        this.repository = repository; //
     }
 
     public WeekEntity insert(WeekEntity week) {
-        return repository.save(week);
+        return repository.save(week); //
     }
 
     public WeekEntity update(Long id, WeekEntity week) {
@@ -35,7 +36,7 @@ public class WeekService {
         return repository.findById(weekId).get();
     }
 
-    public List<WeekEntity> dashboardList() {
+    public List<DashboardDto> dashboardList() {
         return repository.dashboardList();
     }
 }
