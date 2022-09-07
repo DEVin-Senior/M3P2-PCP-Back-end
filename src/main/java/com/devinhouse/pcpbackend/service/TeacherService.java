@@ -1,13 +1,16 @@
 package com.devinhouse.pcpbackend.service;
 
-import java.util.List;
-import java.util.Objects;
-
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
+import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
-import org.springframework.stereotype.Service;
-
+import com.devinhouse.pcpbackend.dto.ArchivedDto;
 import com.devinhouse.pcpbackend.model.TeacherEntity;
 import com.devinhouse.pcpbackend.repository.TeacherRepository;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TeacherService {
@@ -77,4 +80,20 @@ public class TeacherService {
                          .orElseThrow(() -> ServiceException.entityNotFoundByIdException(ENTITY, teacherId));
     }
 
+    public void changeArchived(ArchivedDto dto) {
+        if (dto == null || StringUtils.isEmpty(dto.teacherId)) {
+            throw ApiException.missingParameterException("teacherId");
+        }
+
+        if (!StringUtils.isNumeric(dto.teacherId)) {
+            throw ApiException.badRequestException(DefaultMessageConstants.TEACHER_ID_IS_NOT_A_NUMBER.toString());
+        }
+
+        repository.findById(Long.valueOf(dto.teacherId))
+                .map(teacher -> {
+                    teacher.setArchived(dto.archived);
+                    return repository.save(teacher);
+                })
+                .orElseThrow(() -> ApiException.entityNotFoundException(ENTITY, dto.teacherId));
+    }
 }

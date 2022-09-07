@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.devinhouse.pcpbackend.dto.ArchivedDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.devinhouse.pcpbackend.converter.TeacherConverter;
@@ -18,7 +20,7 @@ import com.devinhouse.pcpbackend.service.TeacherService;
 public class TeacherController {
 
 	@Autowired
-	TeacherService service;
+	private TeacherService service;
 
 	@PostMapping
 	public TeacherEntity insert(@RequestBody @Valid TeacherDto teacherDto) {
@@ -43,6 +45,11 @@ public class TeacherController {
 	@GetMapping("/list/{id}")
 	public TeacherEntity findById(@PathVariable Long id) {
 		return service.findById(id);
+	}
+
+	@PatchMapping("change-archived")
+	public void changeArchived(@RequestBody ArchivedDto dto) {
+		service.changeArchived(dto);
 	}
 
 }
