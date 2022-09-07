@@ -29,7 +29,7 @@ import javax.persistence.EntityManager;
 @AllArgsConstructor
 
 @Service
-public class ClassService {p
+public class ClassService {
 
     private static final String ENTITY = "Turma";
     private ClassRepository classRepository;
@@ -61,8 +61,8 @@ public class ClassService {p
     @Transactional
     public ClassEntity updateClassEntity(ClassEntity classEntity, Long id) {
         ClassEntity storedClassEntity = classRepository.findClassById(id);
-        if (Objects.isNull(classEntity)) {
-            throw ServiceException.entityNotFoundException(ENTITY);
+        if (Objects.isNull(storedClassEntity)) {
+            throw ServiceException.entityNotFoundByIdException(ENTITY, id);
         }
         storedClassEntity.setName(classEntity.getName());
         storedClassEntity.setInitialDate(classEntity.getInitialDate());
