@@ -2,6 +2,7 @@ package com.devinhouse.pcpbackend.controller;
 
 import com.devinhouse.pcpbackend.dto.ClassCreateDto;
 import com.devinhouse.pcpbackend.dto.ClassReadDto;
+import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.service.ClassService;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequestMapping("/turmas")
@@ -35,8 +37,10 @@ public class CourseClassController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody @Valid ClassEntity classEntity, @PathVariable Long id) {
-        return "Class: { id:" + classEntity.getId() + " - " + classEntity.getName() + " - " + classEntity.getInitialDate() + " - " + classEntity.getEndDate() + " - "  + classEntity.getMatrixLink() + " }";
+    public ResponseEntity<ClassUpdateDto> update(@RequestBody @Valid ClassUpdateDto classUpdateDto, @PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
+        ClassEntity classEntity = service.updateClassEntity(modelMapper.map(classUpdateDto, ClassEntity.class),id);
+        URI uri = uriComponentsBuilder.path("/turmas/{id}").buildAndExpand(classEntity.getId()).toUri();
+        return ResponseEntity.created(uri).body(modelMapper.map(classEntity, ClassUpdateDto.class));
     }
 
     @DeleteMapping("/{id}")

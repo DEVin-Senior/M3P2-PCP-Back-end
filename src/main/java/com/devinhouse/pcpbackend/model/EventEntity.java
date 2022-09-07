@@ -31,5 +31,4 @@ public class EventEntity {
 
     @Column(name = "time_stamp", nullable = false)
     private Instant timeStamp;
-    private boolean archive;
 }
