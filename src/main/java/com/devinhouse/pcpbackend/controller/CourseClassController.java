@@ -1,19 +1,26 @@
 package com.devinhouse.pcpbackend.controller;
 
+import com.devinhouse.pcpbackend.common.constants.EventType;
 import com.devinhouse.pcpbackend.dto.ClassCreateDto;
 import com.devinhouse.pcpbackend.dto.ClassReadDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.service.ClassService;
+import com.devinhouse.pcpbackend.service.EventService;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequestMapping("/turmas")
@@ -22,6 +29,9 @@ public class CourseClassController {
 
     private ClassService service;
     private ModelMapper modelMapper = new ModelMapper();
+    
+    @Autowired
+    private EventService eventService;
 
     public CourseClassController (ClassService service) {
         this.service = service;
@@ -31,11 +41,13 @@ public class CourseClassController {
     public ResponseEntity<ClassCreateDto> insert(@RequestBody @Valid ClassCreateDto classDto, UriComponentsBuilder uriComponentsBuilder) {
         ClassEntity classEntity = service.createClassEntity(modelMapper.map(classDto, ClassEntity.class));
         URI uri = uriComponentsBuilder.path("/turmas/{id}").buildAndExpand(classEntity.getId()).toUri();
+        eventService.createEvent(Instant.now(), EventType.CREATE, classEntity);
         return ResponseEntity.created(uri).body(modelMapper.map(classEntity, ClassCreateDto.class));
     }
 
     @PutMapping("/{id}")
     public String update(@RequestBody @Valid ClassEntity classEntity, @PathVariable Long id) {
+    	eventService.createEvent(Instant.now(), EventType.UPDATE, classEntity);
         return "Class: { id:" + classEntity.getId() + " - " + classEntity.getName() + " - " + classEntity.getInitialDate() + " - " + classEntity.getEndDate() + " - "  + classEntity.getMatrixLink() + " }";
     }
 
@@ -55,7 +67,7 @@ public class CourseClassController {
     }
 
     @GetMapping("/list/{id}")
-    public String findById(@PathVariable Long id) {
-        return "Get Id Chamado!";
+    public Optional<ClassEntity> findById(@PathVariable Long id) {
+        return service.findById(id);
     }
 }
