@@ -39,5 +39,4 @@ public class ClassUpdateDto {
     private boolean archive;
 
     private List<ModuleEntity> moduleEntityList;
-    private List<EventEntity> eventEntityList;
 }

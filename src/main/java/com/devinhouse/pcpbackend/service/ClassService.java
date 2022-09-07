@@ -3,6 +3,7 @@ package com.devinhouse.pcpbackend.service;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
 import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
 import com.devinhouse.pcpbackend.repository.ModuleRepository;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
@@ -43,6 +44,10 @@ public class ClassService {
 
         return classes;
     }
+    
+    public Optional<ClassEntity> findById(Long id) {
+    	return classRepository.findById(id);
+    }
 
 
     @Transactional
@@ -50,7 +55,6 @@ public class ClassService {
         if (Objects.isNull(classEntity)) {
             throw ServiceException.entityNotFoundException(ENTITY);
         }
-        //TODO: EventService.save
         try{
             return classRepository.save(classEntity);
         }catch (Exception e){
@@ -71,7 +75,6 @@ public class ClassService {
         storedClassEntity.setArchive(classEntity.isArchive());
         storedClassEntity.setStack(classEntity.getStack());
         storedClassEntity.setModuleEntityList(classEntity.getModuleEntityList());
-        storedClassEntity.setEventEntityList(classEntity.getEventEntityList());
         try{
             return classRepository.save(storedClassEntity);
         }catch (Exception e){
