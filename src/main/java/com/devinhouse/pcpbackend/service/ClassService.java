@@ -1,6 +1,7 @@
 package com.devinhouse.pcpbackend.service;
 
 import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
 import com.devinhouse.pcpbackend.repository.ModuleRepository;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -44,6 +46,10 @@ public class ClassService {
         List<ClassEntity> classes = classPage.getContent();
 
         return classes;
+    }
+    
+    public Optional<ClassEntity> findById(Long id) {
+    	return classRepository.findById(id);
     }
 
 

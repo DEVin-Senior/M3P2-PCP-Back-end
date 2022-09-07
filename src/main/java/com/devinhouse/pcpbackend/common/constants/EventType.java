@@ -4,7 +4,9 @@ public enum EventType {
 
     CREATE("Create"),
     UPDATE("Update"),
-    DELETE("Delete");
+    DELETE("Delete"),
+	ARCHIVE("Arquivar"),
+	UNARCHIVE("DESARQUIVAR");
 
     private final String event;
 
