@@ -50,6 +50,8 @@ public class EventService {
 		return dtoPage;
 	}
 
+	
+	//TODO revisar com o Allan como buscar o usuário
 	private String getUserContext() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = null;
