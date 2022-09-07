@@ -3,6 +3,7 @@ package com.devinhouse.pcpbackend.controller;
 import com.devinhouse.pcpbackend.common.constants.EventType;
 import com.devinhouse.pcpbackend.dto.ClassCreateDto;
 import com.devinhouse.pcpbackend.dto.ClassReadDto;
+import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.service.ClassService;
@@ -46,9 +47,11 @@ public class CourseClassController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestBody @Valid ClassEntity classEntity, @PathVariable Long id) {
-    	eventService.createEvent(Instant.now(), EventType.UPDATE, classEntity);
-        return "Class: { id:" + classEntity.getId() + " - " + classEntity.getName() + " - " + classEntity.getInitialDate() + " - " + classEntity.getEndDate() + " - "  + classEntity.getMatrixLink() + " }";
+    public ResponseEntity<ClassUpdateDto> update(@RequestBody @Valid ClassUpdateDto classUpdateDto, @PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
+        ClassEntity classEntity = service.updateClassEntity(modelMapper.map(classUpdateDto, ClassEntity.class),id);
+        URI uri = uriComponentsBuilder.path("/turmas/{id}").buildAndExpand(classEntity.getId()).toUri();
+        eventService.createEvent(Instant.now(), EventType.UPDATE, classEntity);
+        return ResponseEntity.created(uri).body(modelMapper.map(classEntity, ClassUpdateDto.class));
     }
 
     @DeleteMapping("/{id}")
