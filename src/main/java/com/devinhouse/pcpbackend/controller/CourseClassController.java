@@ -1,6 +1,7 @@
 package com.devinhouse.pcpbackend.controller;
 
 import com.devinhouse.pcpbackend.common.constants.EventType;
+import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
 import com.devinhouse.pcpbackend.dto.ClassCreateDto;
 import com.devinhouse.pcpbackend.dto.ClassReadDto;
 import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
@@ -72,5 +73,11 @@ public class CourseClassController {
     @GetMapping("/list/{id}")
     public Optional<ClassEntity> findById(@PathVariable Long id) {
         return service.findById(id);
+    }
+    
+    @PutMapping("/{id}/archived")
+    public ResponseEntity<ClassUpdateDto> updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto, @PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
+    	URI uri = uriComponentsBuilder.path("/turmas/{id}/archived").buildAndExpand(id).toUri();
+    	return ResponseEntity.created(uri).body(service.setArchivedClass(archiveUpdateDto, id));
     }
 }

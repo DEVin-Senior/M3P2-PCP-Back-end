@@ -40,6 +40,7 @@ public class EventService {
 			break;
 		case UNARCHIVE:
 			repository.save(new EventEntity(timeStamp, EventType.UNARCHIVE, userContext, classEntity));
+			break;
 		default:
 			throw new ServiceException("Erro ao processar evento");
 		}

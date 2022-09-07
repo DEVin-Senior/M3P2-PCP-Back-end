@@ -1,7 +1,10 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.common.constants.EventType;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
+import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
+import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
@@ -9,13 +12,13 @@ import com.devinhouse.pcpbackend.repository.ModuleRepository;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
 import lombok.AllArgsConstructor;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-
-
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,12 +31,14 @@ import javax.persistence.EntityManager;
 
 
 @AllArgsConstructor
-
 @Service
 public class ClassService {
 
+	
     private static final String ENTITY = "Turma";
     private ClassRepository classRepository;
+    private EventService eventService;
+    private ModelMapper modelMaper;
 
     public List<ClassEntity> findAll(int page, int limit) {
         if(page > 0) page = page - 1;
@@ -80,6 +85,22 @@ public class ClassService {
         }catch (Exception e){
             throw ServiceException.errorPersistDataException(ENTITY, e.getMessage());
         }
+    }
+    
+    private void archivedClassEvent(ClassEntity classEntity, Boolean flag) {
+    	if (flag) {
+    		eventService.createEvent(Instant.now(),EventType.ARCHIVE, classEntity);
+    	}else {
+    		eventService.createEvent(Instant.now(),EventType.UNARCHIVE, classEntity);
+    	}
+    }
+    
+    public ClassUpdateDto setArchivedClass(ClassArchiveDto classArchive, Long id) {
+    	ClassEntity classEntity = findById(id).get();
+    	classEntity.setArchive(classArchive.isArchived());
+    	archivedClassEvent(classEntity, classArchive.isArchived());
+    	
+    	return modelMaper.map(classEntity, ClassUpdateDto.class);
     }
 }
 
