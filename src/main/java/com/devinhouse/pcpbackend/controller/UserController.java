@@ -1,5 +1,7 @@
 package com.devinhouse.pcpbackend.controller;
 
+import com.devinhouse.pcpbackend.common.DefaultMessageHelper;
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.converter.UserConverter;
 import com.devinhouse.pcpbackend.dto.UserDto;
@@ -26,7 +28,7 @@ public class UserController {
         try {
             userService.saveUserEntity(UserConverter.converterUser(userDto));
         } catch (ApiException e) {
-            throw ApiException.badRequestException("Erro ao salvar usuário");
+            throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.ERROR_PERSIST_DATA));
         }
     }
 
