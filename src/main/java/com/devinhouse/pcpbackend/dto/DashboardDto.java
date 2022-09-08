@@ -26,9 +26,25 @@ public class DashboardDto {
     @NotBlank
     private String matrixLink;
 
-    //@NotBlank
-    //private String moduleName;
+    @NotBlank
+    private String moduleName;
 
     @NotBlank
-    private String paid;
+    private Boolean paid;
+
+    @NotNull
+    private LocalDate initialDate;
+
+    @Override
+    public String toString() {
+        return "DashboardDto{" +
+                "className='" + className + '\'' +
+                ", stack='" + stack + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", matrixLink='" + matrixLink + '\'' +
+                ", moduleName='" + moduleName + '\'' +
+                ", paid=" + paid +
+                ", initialDate=" + initialDate +
+                '}';
+    }
 }

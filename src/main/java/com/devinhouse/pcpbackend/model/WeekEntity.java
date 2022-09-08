@@ -28,17 +28,12 @@ public class WeekEntity {
     @Column(name= "initial_date", nullable = false)
     private LocalDate initialDate;
 
+    @Column(nullable = false)
+    private Boolean paid;
+
     @OneToOne
     @JoinColumn(name = "teacher_id")
     private TeacherEntity teacherEntity;
-
-    @OneToOne
-    @JoinColumn(name = "class_id")
-    private ClassEntity classEntity;
-
-    //@OneToOne
-    //@JoinColumn(name = "module_id")
-    //private ModuleEntity moduleEntity;
 
     @Override
     public boolean equals(Object o) {

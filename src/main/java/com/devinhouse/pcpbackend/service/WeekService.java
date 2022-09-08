@@ -5,8 +5,9 @@ import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WeekService {
@@ -37,6 +38,13 @@ public class WeekService {
     }
 
     public List<DashboardDto> dashboardList() {
-        return repository.dashboardList();
+        LocalDate weekDate = LocalDate.now();
+        DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+
+        while (!DayOfWeek.MONDAY.equals(dayOfWeek)) {
+            dayOfWeek = dayOfWeek.minus(1);
+            weekDate = weekDate.minusDays(1);
+        }
+        return repository.dashboardList(weekDate);
     }
 }

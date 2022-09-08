@@ -1,6 +1,5 @@
 package com.devinhouse.pcpbackend.dto;
 
-import com.devinhouse.pcpbackend.model.TeacherEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,12 +17,9 @@ public class WeekDto {
     @NotNull
     private LocalDate initialDate;
 
+    @NotBlank
+    private Boolean paid;
+
     @NotNull
     private Long teacherId;
-
-    @NotNull
-    private Long classId;
-
-    //@NotNull
-    //private Long moduleId;
 }
