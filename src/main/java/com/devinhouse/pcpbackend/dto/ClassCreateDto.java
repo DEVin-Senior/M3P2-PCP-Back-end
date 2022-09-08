@@ -39,5 +39,4 @@ public class ClassCreateDto {
     private boolean archive;
 
     private List<ModuleEntity> moduleEntityList;
-    private List<EventEntity> eventEntityList;
 }
