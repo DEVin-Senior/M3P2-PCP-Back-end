@@ -1,19 +1,27 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.common.constants.EventType;
+import com.devinhouse.pcpbackend.common.exception.ApiException;
+import com.devinhouse.pcpbackend.common.exception.ServiceException;
+import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
+import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
 import com.devinhouse.pcpbackend.repository.ModuleRepository;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
 import lombok.AllArgsConstructor;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-
-
+import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -23,18 +31,14 @@ import javax.persistence.EntityManager;
 
 
 @AllArgsConstructor
-
 @Service
 public class ClassService {
+
+	
+    private static final String ENTITY = "Turma";
     private ClassRepository classRepository;
-    private ModuleRepository moduleRepository;
-    private WeekRepository weekRepository;
-    @Autowired
-    private WeekService weekService;
-    @Autowired
-    private ModuleService moduleService;
-    @Autowired
-    private EntityManager entityManager;
+    private EventService eventService;
+    private ModelMapper modelMaper;
 
     public List<ClassEntity> findAll(int page, int limit) {
         if(page > 0) page = page - 1;
@@ -45,59 +49,58 @@ public class ClassService {
 
         return classes;
     }
+    
+    public Optional<ClassEntity> findById(Long id) {
+    	return classRepository.findById(id);
+    }
 
 
     @Transactional
     public ClassEntity createClassEntity(ClassEntity classEntity) {
-        return classRepository.save(classEntity);
+        if (Objects.isNull(classEntity)) {
+            throw ServiceException.entityNotFoundException(ENTITY);
+        }
+        try{
+            return classRepository.save(classEntity);
+        }catch (Exception e){
+            throw ServiceException.errorPersistDataException(ENTITY, e.getMessage());
+        }
     }
 
-/*    private ModuleEntity insertClassIntoModule(ModuleEntity module) {
-        return module;8
-    }*/
-
-    public void inserirInfo() {
-        /* TODO: Pode ser implementado no Teste (fazer algumas alterações)
-        WeekEntity week = new WeekEntity();
-        week.setInitialDate(LocalDate.now());
-        week.setContent("contentWeek1");
-
-        WeekEntity week2 = new WeekEntity();
-        week2.setInitialDate(LocalDate.now());
-        week2.setContent("contentWeek2");
-        entityManager.persist(week);
-        entityManager.persist(week2);
-
-        List<WeekEntity> weeks = new ArrayList<>();
-        weeks.add(week);
-        List<WeekEntity> weeks2 = new ArrayList<>();
-        weeks.add(week2);
-
-        ModuleEntity module = new ModuleEntity();
-        module.setName("nomeModulo");
-        module.setWeekEntityList(weeks);
-        ModuleEntity module2 = new ModuleEntity();
-        module2.setName("nomeModulo2");
-        module2.setWeekEntityList(weeks2);
-        entityManager.persist(module);
-        entityManager.persist(module2);
-
-        List<ModuleEntity> modulos = new ArrayList<>();
-        modulos.add(module);
-        modulos.add(module2);
-
-        ClassEntity classEntity = new ClassEntity();
-        classEntity.setId(5L);
-        classEntity.setName("nomeClass");
-        classEntity.setInitialDate(LocalDate.now());
-        classEntity.setEndDate(LocalDate.now());
-        classEntity.setMatrixLink("matrixLinkClass");
-        classEntity.setStack("stackClass");
-        classEntity.setModuleEntityList(modulos);
-        entityManager.persist(classEntity);
-
-        ClassEntity mock = createClass(classEntity);*/
+    @Transactional
+    public ClassEntity updateClassEntity(ClassEntity classEntity, Long id) {
+        ClassEntity storedClassEntity = classRepository.findClassById(id);
+        if (Objects.isNull(storedClassEntity)) {
+            throw ServiceException.entityNotFoundByIdException(ENTITY, id);
+        }
+        storedClassEntity.setName(classEntity.getName());
+        storedClassEntity.setInitialDate(classEntity.getInitialDate());
+        storedClassEntity.setEndDate(classEntity.getEndDate());
+        storedClassEntity.setMatrixLink(classEntity.getMatrixLink());
+        storedClassEntity.setArchive(classEntity.isArchive());
+        storedClassEntity.setStack(classEntity.getStack());
+        storedClassEntity.setModuleEntityList(classEntity.getModuleEntityList());
+        try{
+            return classRepository.save(storedClassEntity);
+        }catch (Exception e){
+            throw ServiceException.errorPersistDataException(ENTITY, e.getMessage());
+        }
     }
-
+    
+    private void archivedClassEvent(ClassEntity classEntity, Boolean flag) {
+    	if (flag) {
+    		eventService.createEvent(Instant.now(),EventType.ARCHIVE, classEntity);
+    	}else {
+    		eventService.createEvent(Instant.now(),EventType.UNARCHIVE, classEntity);
+    	}
+    }
+    
+    public ClassUpdateDto setArchivedClass(ClassArchiveDto classArchive, Long id) {
+    	ClassEntity classEntity = findById(id).get();
+    	classEntity.setArchive(classArchive.isArchived());
+    	archivedClassEvent(classEntity, classArchive.isArchived());
+    	
+    	return modelMaper.map(classEntity, ClassUpdateDto.class);
+    }
 }
 
