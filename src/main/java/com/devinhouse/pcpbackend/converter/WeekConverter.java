@@ -11,18 +11,16 @@ public class WeekConverter {
     // criar objeto week com os dados do week dto que veio no request
     public static WeekEntity converterWeek(WeekDto weekDto){
         WeekEntity week = new WeekEntity();
-        // cria objeto vazio e seta o id
-        TeacherEntity teacher = new TeacherEntity();
-        teacher.setId(weekDto.getTeacherId());
 
         week.setContent(weekDto.getContent());
         week.setInitialDate(weekDto.getInitialDate());
+        week.setPaid(weekDto.getPaid());
 
-        //passa o objeto teacher para o week
+        TeacherEntity teacher = new TeacherEntity();
+        teacher.setId(weekDto.getTeacherId());
         week.setTeacherEntity(teacher);
 
         return week;
-
     }
 
 }
