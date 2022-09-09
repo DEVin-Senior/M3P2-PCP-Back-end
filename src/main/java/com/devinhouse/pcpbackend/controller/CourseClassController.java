@@ -4,9 +4,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
 import com.devinhouse.pcpbackend.dto.ClassCreateDto;
 import com.devinhouse.pcpbackend.dto.ClassReadDto;
@@ -72,14 +69,14 @@ public class CourseClassController {
         return ResponseEntity.ok().body(returnValue);
     }
 
-    @GetMapping("/list/{id}")
+    @GetMapping("/listar/{id}")
     public Optional<ClassEntity> findById(@PathVariable Long id) {
         return service.findById(id);
     }
     
     @PutMapping("/{id}/arquivar")
     public ResponseEntity<ClassUpdateDto> updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto, @PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
-    	URI uri = uriComponentsBuilder.path("/turmas/{id}/archived").buildAndExpand(id).toUri();
+    	URI uri = uriComponentsBuilder.path("/turmas/{id}/arquivar").buildAndExpand(id).toUri();
     	return ResponseEntity.created(uri).body(service.setArchivedClass(archiveUpdateDto, id));
     }
 }

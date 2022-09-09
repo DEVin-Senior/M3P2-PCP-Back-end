@@ -24,15 +24,14 @@ public class EventController {
 
 	@GetMapping
 	public ResponseEntity<Page<EventReadDto>> getEvents(
-			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+		@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(eventService.findAll(pageable));
 	}
 
 	@GetMapping("/turmas/{id}")
 	public ResponseEntity<Page<EventReadDto>> getEventByClassId(
-			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
-			@PathVariable Long id) {
+		@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+		@PathVariable Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(eventService.getEventsByClassId(id, pageable));
 	}
-
 }
