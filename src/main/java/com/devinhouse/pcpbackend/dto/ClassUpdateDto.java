@@ -36,7 +36,5 @@ public class ClassUpdateDto {
     @Size(max = 100)
     private String matrixLink;
 
-    private boolean archive;
-
     private List<ModuleEntity> moduleEntityList;
 }

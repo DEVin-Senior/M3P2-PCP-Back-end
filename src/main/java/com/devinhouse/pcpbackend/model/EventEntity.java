@@ -2,18 +2,13 @@ package com.devinhouse.pcpbackend.model;
 
 import java.time.Instant;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.devinhouse.pcpbackend.common.constants.EventType;
@@ -46,17 +41,13 @@ public class EventEntity {
 	@Column(name = "time_stamp", nullable = false)
 	private Instant timeStamp;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "class_to_event", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "class_id"))
-	private ClassEntity classEntity;
+	@Column(name = "class_id", nullable = false)
+	private Long classEntityId;
 
-	private boolean archive;
-
-	public EventEntity(Instant timeStamp, EventType eventType, String userContext, ClassEntity classEntity) {
+	public EventEntity(Instant timeStamp, EventType eventType, String userContext, Long classEntityId) {
 		this.timeStamp = timeStamp;
 		this.eventType = eventType;
 		this.userContext = userContext;
-		this.classEntity = classEntity;
-		this.archive = false;
+		this.classEntityId = classEntityId;
 	}
 }
