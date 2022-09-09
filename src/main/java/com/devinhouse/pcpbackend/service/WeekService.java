@@ -47,4 +47,13 @@ public class WeekService {
         }
         return repository.dashboardList(weekDate);
     }
+
+    public void updatePayment(Long id){
+        WeekEntity updatePaymentdWeek = repository.findById(id).get();
+        if(updatePaymentdWeek.getPaid()==false){
+            updatePaymentdWeek.setPaid(true);
+        }else{
+            updatePaymentdWeek.setPaid(false);
+        }
+    }
 }
