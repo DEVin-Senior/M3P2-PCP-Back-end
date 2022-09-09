@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,13 @@ public class EventController {
 	public ResponseEntity<Page<EventReadDto>> getEvents(
 			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
 		return ResponseEntity.status(HttpStatus.OK).body(eventService.findAll(pageable));
+	}
+
+	@GetMapping("/turmas/{id}")
+	public ResponseEntity<Page<EventReadDto>> getEventByClassId(
+			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+			@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(eventService.getEventsByClassId(id, pageable));
 	}
 
 }
