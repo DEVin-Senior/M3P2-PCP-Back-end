@@ -9,10 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.constants.EventType;
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
 import com.devinhouse.pcpbackend.dto.EventReadDto;
-import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.repository.EventRepository;
 
@@ -22,37 +22,41 @@ public class EventService {
 	@Autowired
 	private EventRepository repository;
 
-	public void createEvent(Instant timeStamp, EventType eventType, ClassEntity classEntity) {
+	public void createEvent(Instant timeStamp, EventType eventType, Long classId) {
 		String userContext = getUserContext();
 
 		switch (eventType) {
 		case CREATE:
-			repository.save(new EventEntity(timeStamp, EventType.CREATE, userContext, classEntity));
+			repository.save(new EventEntity(timeStamp, EventType.CREATE, userContext, classId));
 			break;
 		case UPDATE:
-			repository.save(new EventEntity(timeStamp, EventType.UPDATE, userContext, classEntity));
+			repository.save(new EventEntity(timeStamp, EventType.UPDATE, userContext, classId));
 			break;
 		case DELETE:
-			repository.save(new EventEntity(timeStamp, EventType.DELETE, userContext, classEntity));
+			repository.save(new EventEntity(timeStamp, EventType.DELETE, userContext, classId));
 			break;
 		case ARCHIVE:
-			repository.save(new EventEntity(timeStamp, EventType.ARCHIVE, userContext, classEntity));
+			repository.save(new EventEntity(timeStamp, EventType.ARCHIVE, userContext, classId));
 			break;
 		case UNARCHIVE:
-			repository.save(new EventEntity(timeStamp, EventType.UNARCHIVE, userContext, classEntity));
+			repository.save(new EventEntity(timeStamp, EventType.UNARCHIVE, userContext, classId));
 			break;
 		default:
-			throw new ServiceException("Erro ao processar evento");
+			throw new ServiceException(DefaultMessageConstants.ERROR_PROCESSING_EVENT.getMessage());
 		}
 	}
-	
+
 	public Page<EventReadDto> findAll(Pageable pageable) {
 		Page<EventReadDto> dtoPage = repository.findAll(pageable).map(EventReadDto::toDto);
 		return dtoPage;
 	}
 
-	
-	//TODO revisar com o Allan como buscar o usuário
+	public Page<EventReadDto> getEventsByClassId(Long id, Pageable page) {
+		Page<EventReadDto> dtoPage = repository.findByClassEntityId(id, page).map(EventReadDto::toDto);
+		return dtoPage;
+	}
+
+	// TODO revisar com o Allan como buscar o usuário
 	private String getUserContext() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = null;

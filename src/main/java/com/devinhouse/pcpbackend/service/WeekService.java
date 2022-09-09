@@ -1,22 +1,24 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.dto.DashboardDto;
 import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WeekService {
     private final WeekRepository repository;
 
     public WeekService(WeekRepository repository) {
-        this.repository = repository;//
+        this.repository = repository; //
     }
 
     public WeekEntity insert(WeekEntity week) {
-        return repository.save(week);
+        return repository.save(week); //
     }
 
     public WeekEntity update(Long id, WeekEntity week) {
@@ -35,4 +37,14 @@ public class WeekService {
         return repository.findById(weekId).get();
     }
 
+    public List<DashboardDto> dashboardList() {
+        LocalDate weekDate = LocalDate.now();
+        DayOfWeek dayOfWeek = LocalDate.now().getDayOfWeek();
+
+        while (!DayOfWeek.MONDAY.equals(dayOfWeek)) {
+            dayOfWeek = dayOfWeek.minus(1);
+            weekDate = weekDate.minusDays(1);
+        }
+        return repository.dashboardList(weekDate);
+    }
 }

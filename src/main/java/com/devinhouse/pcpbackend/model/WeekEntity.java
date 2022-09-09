@@ -28,6 +28,9 @@ public class WeekEntity {
     @Column(name= "initial_date", nullable = false)
     private LocalDate initialDate;
 
+    @Column(nullable = false)
+    private Boolean paid;
+
     @OneToOne
     @JoinColumn(name = "teacher_id")
     private TeacherEntity teacherEntity;
