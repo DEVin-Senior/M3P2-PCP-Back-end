@@ -8,15 +8,7 @@ import javax.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
 import com.devinhouse.pcpbackend.dto.ClassCreateDto;
@@ -74,9 +66,8 @@ public class CourseClassController {
         return service.findById(id);
     }
     
-    @PutMapping("/{id}/arquivar")
-    public ResponseEntity<ClassUpdateDto> updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto, @PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
-    	URI uri = uriComponentsBuilder.path("/turmas/{id}/arquivar").buildAndExpand(id).toUri();
-    	return ResponseEntity.created(uri).body(service.setArchivedClass(archiveUpdateDto, id));
+    @PatchMapping("/arquivar")
+    public void updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto) {
+    	service.setArchivedClass(archiveUpdateDto);
     }
 }
