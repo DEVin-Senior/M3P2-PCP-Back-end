@@ -1,9 +1,11 @@
 package com.devinhouse.pcpbackend.service;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,11 +47,14 @@ public class EventService {
 		}
 	}
 	
-	public Page<EventReadDto> findAll(Pageable pageable) {
-		Page<EventReadDto> dtoPage = repository.findAll(pageable).map(EventReadDto::toDto);
-		return dtoPage;
-	}
+	public List<EventEntity> findAll(int page, int limit) {
+		if(page > 0) page = page - 1;
 
+		Pageable pageableRequest = PageRequest.of(page, limit);
+		Page<EventEntity> eventPage = repository.findAll(pageableRequest);
+		List<EventEntity> events = eventPage.getContent();
+		return events;
+	}
 	
 	//TODO revisar com o Allan como buscar o usuário
 	private String getUserContext() {
@@ -66,3 +71,4 @@ public class EventService {
 	}
 
 }
+
