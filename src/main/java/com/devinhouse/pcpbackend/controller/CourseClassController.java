@@ -62,8 +62,10 @@ public class CourseClassController {
     }
 
     @GetMapping("/listar/{id}")
-    public Optional<ClassEntity> findById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<ClassUpdateDto> findById(@PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
+        ClassEntity classEntity = service.findById(id);
+        URI uri = uriComponentsBuilder.path("/turmas/{id}").buildAndExpand(classEntity.getId()).toUri();
+        return ResponseEntity.created(uri).body(modelMapper.map(classEntity, ClassUpdateDto.class));
     }
     
     @PatchMapping("/arquivar")

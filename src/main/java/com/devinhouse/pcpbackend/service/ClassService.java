@@ -46,8 +46,8 @@ public class ClassService {
 		return classes;
 	}
 
-	public Optional<ClassEntity> findById(Long id) {
-		return classRepository.findById(id);
+	public ClassEntity findById(Long id) {
+		return classRepository.findClassById(id);
 	}
 
 	@Transactional
