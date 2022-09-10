@@ -47,6 +47,7 @@ public class EventService {
 			throw new ServiceException(DefaultMessageConstants.ERROR_PROCESSING_EVENT.getMessage());
 		}
 	}
+
 	public List<EventEntity> findAll(int page, int limit) {
 		if(page > 0) page = page - 1;
 
@@ -63,7 +64,7 @@ public class EventService {
 		List<EventEntity> events = eventPage.getContent();
 		return events;
 	}
-
+  
 	private String getUserContext() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = null;
