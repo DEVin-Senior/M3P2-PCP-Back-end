@@ -7,6 +7,10 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
+import com.devinhouse.pcpbackend.common.exception.ApiException;
+import com.devinhouse.pcpbackend.dto.ArchivedDto;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -89,11 +93,19 @@ public class ClassService {
 		}
 	}
 
-	public ClassUpdateDto setArchivedClass(ClassArchiveDto classArchive, Long id) {
-		ClassEntity classEntity = findById(id).get();
-		classEntity.setArchive(classArchive.isArchived());
-		archivedClassEvent(id, classArchive.isArchived());
+	public void setArchivedClass(ClassArchiveDto classArchive) {
+		if (classArchive == null || StringUtils.isEmpty(classArchive.classId)) {
+			throw ApiException.missingParameterException("classId");
+		}
 
-		return modelMaper.map(classEntity, ClassUpdateDto.class);
+		if (!StringUtils.isNumeric(classArchive.classId)) {
+			throw ApiException.missingParameterException("classId");
+		}
+
+		classRepository.findById(Long.valueOf(classArchive.classId)).map(course -> {
+			archivedClassEvent(course.getId(), !course.isArchive());
+			course.setArchive(classArchive.archived);
+			return classRepository.save(course);
+		}).orElseThrow(() -> ApiException.entityNotFoundException(ENTITY, classArchive.classId));
 	}
 }
