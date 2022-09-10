@@ -2,6 +2,7 @@ package com.devinhouse.pcpbackend.controller;
 
 
 import com.devinhouse.pcpbackend.converter.WeekConverter;
+import com.devinhouse.pcpbackend.dto.DashboardDto;
 import com.devinhouse.pcpbackend.dto.WeekDto;
 import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.service.WeekService;
@@ -45,4 +46,8 @@ public class WeekController {
         return service.findById(id);
     }
 
+    @GetMapping("/dashboard")
+    public List<DashboardDto> dashboardList() {
+        return service.dashboardList(); //
+    }
 }

@@ -32,9 +32,6 @@ public class EventReadDto {
 	@NotNull(message = "TimeStamp não pode estar em branco")
 	private Instant timeStamp;
 
-	@NotNull(message = "O id da turma não pode estar em branco")
-	private ClassEntity classEntity;
-
 	public static EventReadDto toDto(EventEntity entity) {
 		EventReadDto dto = new EventReadDto();
 		dto.setEventType(entity.getEventType());

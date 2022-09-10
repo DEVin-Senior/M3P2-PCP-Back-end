@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,4 +39,13 @@ public class EventController {
 		return ResponseEntity.ok().body(returnValue);
 	}
 
+	@GetMapping("/turmas/{id}")
+	public ResponseEntity<List<EventReadDto>> getEventByClassId(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "5") int limit, @PathVariable Long id) {
+		List<EventReadDto> returnValue = new ArrayList<>();
+		List<EventEntity> eventsEntity = eventService.getEventsByClassId(id, page, limit);
+
+		returnValue = EventReadDto.converterEventEntityToDtoList(eventsEntity);
+
+		return ResponseEntity.ok().body(returnValue);
+	}
 }

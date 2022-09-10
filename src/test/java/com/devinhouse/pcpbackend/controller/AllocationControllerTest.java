@@ -63,7 +63,7 @@ public class AllocationControllerTest extends CommonBaseTest {
     public void setUp() {
         ClassEntity classEntity = new ClassEntity();
         classEntity.setArchive(false);
-        classEntity.setEventEntityList(null);
+        //classEntity.setEventEntityList(null);
         classEntity.setInitialDate(LocalDate.of(30, 8, 20));
         classEntity.setName("Turma Teste");
         classEntity.setStack("Teste");
