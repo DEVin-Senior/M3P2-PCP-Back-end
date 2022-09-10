@@ -32,7 +32,7 @@ public class WeekController {
     }
 
     @PutMapping("payment/{id}")
-    public void updatePayment( @PathVariable Long id) {
+    public void updatePayment(@PathVariable Long id) {
         service.updatePayment(id);
     }
 
