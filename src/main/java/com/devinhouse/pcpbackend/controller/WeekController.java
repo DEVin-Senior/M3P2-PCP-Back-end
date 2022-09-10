@@ -31,7 +31,7 @@ public class WeekController {
         return service.update(id, WeekConverter.converterWeek(weekDto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("payment/{id}")
     public void updatePayment( @PathVariable Long id) {
         service.updatePayment(id);
     }
