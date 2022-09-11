@@ -15,7 +15,9 @@ public enum DefaultMessageConstants {
     ERROR_UPDATE_DATA_BY_ID("Erro ao atualizar o %s com ID %s no banco de dados. Causa: %s"),
     ERROR_DELETE_DATA_BY_ID("Erro ao deletar o %s com ID '%s' no banco de dados. Causa: %s"),
     TEACHER_ID_IS_NOT_A_NUMBER ("Id do docente informado não é um número"),
-	ERROR_PROCESSING_EVENT("Erro ao processar evento");
+	ERROR_PROCESSING_EVENT("Erro ao processar evento"),
+	CLASS_NOT_FOUND("Turma não encontrada com o ID informado."),
+	CLASS_ALREADY_EXISTS_WITH_GIVEN_NAME("Já existe uma turma cadastrada com este nome.");
 
     private final String message;
 
