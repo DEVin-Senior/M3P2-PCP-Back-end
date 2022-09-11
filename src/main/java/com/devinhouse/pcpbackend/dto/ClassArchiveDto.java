@@ -1,13 +1,13 @@
 package com.devinhouse.pcpbackend.dto;
 
-import lombok.Getter;
-
 import javax.validation.constraints.NotEmpty;
+
+import lombok.Getter;
 
 @Getter
 public class ClassArchiveDto {
 
-    @NotEmpty
+	@NotEmpty
 	public String classId;
-    public boolean archived;
+	public boolean archived;
 }
