@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin("{*}")
+@CrossOrigin(origins = "*")
 @RequestMapping("/week")
 public class WeekController {
 
