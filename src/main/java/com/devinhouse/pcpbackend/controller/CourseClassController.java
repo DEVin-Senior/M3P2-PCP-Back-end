@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
+
+import com.devinhouse.pcpbackend.dto.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
-import com.devinhouse.pcpbackend.dto.ClassCreateDto;
-import com.devinhouse.pcpbackend.dto.ClassReadDto;
-import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.service.ClassService;
 
@@ -52,18 +55,18 @@ public class CourseClassController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<ClassReadDto>> findAll(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "5") int limit) {
+    public ResponseEntity<List<ClassReadDto>> findAll(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "100") int limit) {
         List<ClassReadDto> returnValue = new ArrayList<>();
         List<ClassEntity> classesEntity = service.findAll(page, limit);
-
         returnValue = ClassReadDto.converterClassEntityToDtoList(classesEntity);
-
         return ResponseEntity.ok().body(returnValue);
     }
 
     @GetMapping("/listar/{id}")
-    public Optional<ClassEntity> findById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<ClassUpdateDto> findById(@PathVariable Long id, UriComponentsBuilder uriComponentsBuilder) {
+        ClassEntity classEntity = service.findById(id);
+        URI uri = uriComponentsBuilder.path("/turmas/{id}").buildAndExpand(classEntity.getId()).toUri();
+        return ResponseEntity.created(uri).body(modelMapper.map(classEntity, ClassUpdateDto.class));
     }
     
     @PatchMapping("/arquivar")

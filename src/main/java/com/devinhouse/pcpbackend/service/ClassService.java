@@ -12,6 +12,7 @@ import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.dto.ArchivedDto;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +32,10 @@ import lombok.AllArgsConstructor;
 public class ClassService {
 
 	private static final String ENTITY = "Turma";
-	private ClassRepository classRepository;
-	private EventService eventService;
-	private ModelMapper modelMaper;
+	@Autowired
+	ClassRepository classRepository;
+	@Autowired
+	EventService eventService;
 
 	public List<ClassEntity> findAll(int page, int limit) {
 		if (page > 0)
@@ -46,8 +48,8 @@ public class ClassService {
 		return classes;
 	}
 
-	public Optional<ClassEntity> findById(Long id) {
-		return classRepository.findById(id);
+	public ClassEntity findById(Long id) {
+		return classRepository.findClassById(id);
 	}
 
 	@Transactional

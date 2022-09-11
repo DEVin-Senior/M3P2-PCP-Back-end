@@ -1,22 +1,45 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.repository.ClassRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 class ClassServiceTest {
 
-    @BeforeEach
-    void setUp() {
-    }
+    @InjectMocks
+    ClassService classService;
+
+    @Mock
+    ClassRepository classRepository;
+
+    ClassEntity classEntity;
 
     @Test
     void findAll() {
     }
 
+    @BeforeEach
+    void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+
+        classEntity = new ClassEntity();
+        classEntity.setId(1L);
+        classEntity.setName("Teste");
+
+    }
+
     @Test
-    void createClassEntity() {
+    final void createClassEntity() {
+
+        when(classRepository.save( any(ClassEntity.class))).thenReturn(classEntity);
         /* TODO: fazer algumas alterações
         WeekEntity week = new WeekEntity();
         week.setInitialDate(LocalDate.now());
