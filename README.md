@@ -20,9 +20,14 @@ Obs: clonar o frontend da aplicação em: https://github.com/DEVin-Senior/M3P2-P
 
 - Spring 2.7.3 -> https://start.spring.io/
 
-📌 Versão
+###Versão do projeto 1.0
 
-Versão do projeto 1.0
+###Informações sobre as branchs
+
+- Squad 01: SQ01;
+- Squad 02: SQ02;
+- Squad 03: SQ03;
+- Todas as squads: ALL (Branch sobre assuntos gerais que atingem todas as squads)
 
 <br>
 <p align="center"> ✒️ Autores ✒️ </p>
