@@ -15,7 +15,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) {
         try {
-            http.csrf().disable().cors().and().authorizeRequests().antMatchers("/teacher", "/class").permitAll()
+            http.csrf().disable().cors().and().authorizeRequests().antMatchers("/teacher/*", "/class/*", "/week/*", "/turmas/*", "/historico/*", "/allocation/*").authenticated()
                     .antMatchers("/loginRegister").permitAll();
         } catch (Exception e) {
             throw ApiException.badRequestException(DefaultMessageHelper.getMessage(DefaultMessageConstants.SECURITY_CONFIGURATION_ERROR));
