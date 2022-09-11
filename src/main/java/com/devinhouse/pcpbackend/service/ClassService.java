@@ -17,7 +17,6 @@ import com.devinhouse.pcpbackend.common.constants.EventType;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
 import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
-import com.devinhouse.pcpbackend.dto.ClassReadDto;
 import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
@@ -47,7 +46,6 @@ public class ClassService {
 		ClassEntity entity = classRepository.findById(id).get();
 		ClassUpdateDto dto = ClassUpdateDto.converterClassEntityToDto(entity);
 		return dto;
-
 	}
 
 	@Transactional

@@ -33,7 +33,7 @@ public class EventController {
 	}
 
 	@GetMapping("/turmas/{id}")
-	public ResponseEntity<List<EventReadDto>> getEventByClassId(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "5") int limit, @PathVariable Long id) {
+	public ResponseEntity<List<EventReadDto>> getEventByClassId(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "100") int limit, @PathVariable Long id) {
 		List<EventReadDto> returnValue = new ArrayList<>();
 		List<EventEntity> eventsEntity = eventService.getEventsByClassId(id, page, limit);
 

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.exception.ApiException;
 import com.devinhouse.pcpbackend.dto.ClassArchiveDto;
@@ -67,16 +66,13 @@ public class CourseClassController {
 		}
 	}
 
-	@GetMapping("/listar")
-	public ResponseEntity<List<ClassReadDto>> findAll(@RequestParam(value = "page", defaultValue = "0") int page,
-			@RequestParam(value = "limit", defaultValue = "5") int limit) {
-		List<ClassReadDto> returnValue = new ArrayList<>();
-		List<ClassEntity> classesEntity = service.findAll(page, limit);
-
-		returnValue = ClassReadDto.converterClassEntityToDtoList(classesEntity);
-
-		return ResponseEntity.ok().body(returnValue);
-	}
+    @GetMapping("/listar")
+    public ResponseEntity<List<ClassReadDto>> findAll(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "100") int limit) {
+        List<ClassReadDto> returnValue = new ArrayList<>();
+        List<ClassEntity> classesEntity = service.findAll(page, limit);
+        returnValue = ClassReadDto.converterClassEntityToDtoList(classesEntity);
+        return ResponseEntity.ok().body(returnValue);
+    }
 
 	@GetMapping("/listar/{id}")
 	public ResponseEntity<ClassUpdateDto> findById(@PathVariable Long id) {
@@ -86,10 +82,10 @@ public class CourseClassController {
 			throw new ApiException(HttpStatus.NOT_FOUND, DefaultMessageConstants.CLASS_NOT_FOUND.getMessage());
 		}
 	}
-
-	@PatchMapping("/arquivar")
-	public void updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto) {
-		service.setArchivedClass(archiveUpdateDto);
-	}
+    
+    @PatchMapping("/arquivar")
+    public void updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto) {
+    	service.setArchivedClass(archiveUpdateDto);
+    }
 
 }
