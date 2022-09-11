@@ -12,6 +12,7 @@ Orientações para execução do programa:
 - Acessar o arquivo ***./src/main/resources/application.properties*** e inserir a senha do seu database
 - Execute o programa
 Obs: clonar o frontend da aplicação em: https://github.com/DEVin-Senior/M3P2-PCP-Front-end
+
 ###Tecnologias utilizadas
 
 - Maven: 3.8.6 -> https://maven.apache.org/download.cgi
