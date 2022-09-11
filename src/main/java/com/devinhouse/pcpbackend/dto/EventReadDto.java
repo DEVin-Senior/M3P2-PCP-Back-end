@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.devinhouse.pcpbackend.common.constants.EventType;
-import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.model.EventEntity;
 
 import lombok.AllArgsConstructor;
