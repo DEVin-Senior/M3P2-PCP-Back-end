@@ -5,7 +5,7 @@
 
 Link repositório: https://github.com/DEVin-Senior/M3P2-PCP-Back-end
 
-###Execução
+### Execução
 
 Orientações para execução do programa:
 - Criar no pgAdmin(PostgreSQL) um database com o nome ***pcp-backend***
@@ -13,7 +13,7 @@ Orientações para execução do programa:
 - Execute o programa
 Obs: clonar o frontend da aplicação em: https://github.com/DEVin-Senior/M3P2-PCP-Front-end
 
-###Tecnologias utilizadas
+### Tecnologias utilizadas
 
 - Maven: 3.8.6 -> https://maven.apache.org/download.cgi
 
@@ -21,9 +21,9 @@ Obs: clonar o frontend da aplicação em: https://github.com/DEVin-Senior/M3P2-P
 
 - Spring 2.7.3 -> https://start.spring.io/
 
-###Versão do projeto 1.0
+### Versão do projeto 1.0
 
-###Informações sobre as branchs
+### Informações sobre as branchs
 
 - Squad 01: SQ01;
 - Squad 02: SQ02;
