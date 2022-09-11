@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.devinhouse.pcpbackend.common.constants.DefaultMessageConstants;
 import com.devinhouse.pcpbackend.common.constants.EventType;
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
-import com.devinhouse.pcpbackend.dto.EventReadDto;
 import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.repository.EventRepository;
 

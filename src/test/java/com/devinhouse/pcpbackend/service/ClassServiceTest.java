@@ -5,27 +5,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import com.devinhouse.pcpbackend.common.exception.ServiceException;
-import org.springframework.data.domain.Page;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.model.ModuleEntity;
 import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.Page;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,7 +43,7 @@ class ClassServiceTest {
     }
 
     @Test
-    void shouldReturnExceptionWhenClassEntityIsNull() {
+    void shouldReturnExceptionWhenClassEntityIsNullTest() {
         //Arrange
        classTest = null;
 
@@ -64,52 +57,63 @@ class ClassServiceTest {
     }
 
     @Test
-    void shouldReturnClassEntityWhenCreate() {
+    void shouldReturnClassEntityWhenCreateTest() {
         //Arrange
         when(classRepository.save(classTest)).thenReturn(classTest);
 
         //Act
-
-        ClassEntity classSave =  classService.createClassEntity(classTest);
+        ClassEntity classSave = classService.createClassEntity(classTest);
 
         //Assert
         assertThat(classSave).isEqualTo(classTest);
     }
 
-    @Test
-    void test0003() {
+    @Test()
+    void shouldReturnExceptionWhenClassEntitySaveTest() {
         //Arrange
-        when(classRepository.save(classTest)).thenThrow(new Exception("..."){});
+        when(classRepository.save(classTest)).thenThrow(new RuntimeException("Erro"));
 
         //Act
-        ClassEntity classSave =  classService.createClassEntity(classTest);
+        String message = assertThrows(ServiceException.class , ()-> {
+            classService.createClassEntity(classTest);
+        }).toString();
 
 
         //Assert
-        assertThat(classSave).isEqualTo("Erro ao salvar o Turma");
+        assertThat(message).contains("Causa: Erro");
 
     }
 
     @Test
-    void test0004() {
+    void shouldReturnClassEntityWhenUpdateTest() {
         //Arrange
-
+        when(classRepository.findClassById(classTest.getId())).thenReturn(classTest);
 
         //Act
+        ClassEntity classSave = classService.updateClassEntity(classTest, classTest.getId());
 
         //Assert
-
+        assertThat(classSave).isEqualTo(classTest);
     }
+
+
 
     @Test
-    void test0005() {
+    void  shouldReturnExceptionWhenClassEntityUpdateSaveTest(){
         //Arrange
+        when(classRepository.findClassById(classTest.getId())).thenReturn(classTest);
+        when(classRepository.save(classTest)).thenThrow(new RuntimeException("Erro"));
 
         //Act
+        String message = assertThrows(ServiceException.class , ()-> {
+            classService.updateClassEntity(classTest, classTest.getId());
+        }).toString();
+
 
         //Assert
-
+        assertThat(message).contains("Causa: Erro");
     }
+
 
     private WeekEntity creatWeekEntity(){
 
