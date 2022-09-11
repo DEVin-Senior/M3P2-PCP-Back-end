@@ -1,6 +1,13 @@
 package com.devinhouse.pcpbackend.service;
 
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+import com.devinhouse.pcpbackend.common.exception.ServiceException;
 import com.devinhouse.pcpbackend.model.ClassEntity;
+import com.devinhouse.pcpbackend.model.ModuleEntity;
+import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.repository.ClassRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,80 +15,145 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class ClassServiceTest {
-
-    @InjectMocks
-    ClassService classService;
 
     @Mock
     ClassRepository classRepository;
 
-    ClassEntity classEntity;
+    @Mock
+    EventService eventService;
 
-    @Test
-    void findAll() {
-    }
+    @InjectMocks
+    ClassService classService;
+
+    private ClassEntity classTest = new ClassEntity();
 
     @BeforeEach
-    void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+    void setUp() {
+        classTest = createClassEntity();
+        MockitoAnnotations.openMocks(this);
+    }
 
-        classEntity = new ClassEntity();
-        classEntity.setId(1L);
-        classEntity.setName("Teste");
+    @Test
+    void shouldReturnExceptionWhenClassEntityIsNullTest() {
+        //Arrange
+       classTest = null;
+
+        //Act
+        String message = assertThrows(ServiceException.class , ()-> {
+            classService.createClassEntity(classTest);
+        }).toString();
+
+        //Assert
+        assertThat(message).contains("Entity 'Turma' not found");
+    }
+
+    @Test
+    void shouldReturnClassEntityWhenCreateTest() {
+        //Arrange
+        when(classRepository.save(classTest)).thenReturn(classTest);
+
+        //Act
+        ClassEntity classSave = classService.createClassEntity(classTest);
+
+        //Assert
+        assertThat(classSave).isEqualTo(classTest);
+    }
+
+    @Test()
+    void shouldReturnExceptionWhenClassEntitySaveTest() {
+        //Arrange
+        when(classRepository.save(classTest)).thenThrow(new RuntimeException("Erro"));
+
+        //Act
+        String message = assertThrows(ServiceException.class , ()-> {
+            classService.createClassEntity(classTest);
+        }).toString();
+
+
+        //Assert
+        assertThat(message).contains("Causa: Erro");
 
     }
 
     @Test
-    final void createClassEntity() {
+    void shouldReturnClassEntityWhenUpdateTest() {
+        //Arrange
+        when(classRepository.findClassById(classTest.getId())).thenReturn(classTest);
 
-        when(classRepository.save( any(ClassEntity.class))).thenReturn(classEntity);
-        /* TODO: fazer algumas alterações
+        //Act
+        ClassEntity classSave = classService.updateClassEntity(classTest, classTest.getId());
+
+        //Assert
+        assertThat(classSave).isEqualTo(classTest);
+    }
+
+
+
+    @Test
+    void  shouldReturnExceptionWhenClassEntityUpdateSaveTest(){
+        //Arrange
+        when(classRepository.findClassById(classTest.getId())).thenReturn(classTest);
+        when(classRepository.save(classTest)).thenThrow(new RuntimeException("Erro"));
+
+        //Act
+        String message = assertThrows(ServiceException.class , ()-> {
+            classService.updateClassEntity(classTest, classTest.getId());
+        }).toString();
+
+
+        //Assert
+        assertThat(message).contains("Causa: Erro");
+    }
+
+
+    private WeekEntity creatWeekEntity(){
+
         WeekEntity week = new WeekEntity();
         week.setInitialDate(LocalDate.now());
-        week.setContent("contentWeek1");
+        week.setContent("contentWeek");
 
-        WeekEntity week2 = new WeekEntity();
-        week2.setInitialDate(LocalDate.now());
-        week2.setContent("contentWeek2");
-        entityManager.persist(week);
-        entityManager.persist(week2);
+        return week;
+    }
 
-        List<WeekEntity> weeks = new ArrayList<>();
-        weeks.add(week);
-        List<WeekEntity> weeks2 = new ArrayList<>();
-        weeks.add(week2);
+    private ModuleEntity createModuleEntity(){
 
         ModuleEntity module = new ModuleEntity();
+
+        List<WeekEntity> weeks = new ArrayList<>();
+        weeks.add(creatWeekEntity());
         module.setName("nomeModulo");
         module.setWeekEntityList(weeks);
-        ModuleEntity module2 = new ModuleEntity();
-        module2.setName("nomeModulo2");
-        module2.setWeekEntityList(weeks2);
-        entityManager.persist(module);
-        entityManager.persist(module2);
 
-        List<ModuleEntity> modulos = new ArrayList<>();
-        modulos.add(module);
-        modulos.add(module2);
+        return module;
+    }
+
+    private ClassEntity createClassEntity() {
 
         ClassEntity classEntity = new ClassEntity();
+        List<WeekEntity> weeks = new ArrayList<>();
+        List<ModuleEntity> modulos = new ArrayList<>();
+
+        weeks.add(creatWeekEntity());
+        modulos.add(createModuleEntity());
         classEntity.setId(5L);
         classEntity.setName("nomeClass");
         classEntity.setInitialDate(LocalDate.now());
         classEntity.setEndDate(LocalDate.now());
         classEntity.setMatrixLink("matrixLinkClass");
         classEntity.setStack("stackClass");
+        classEntity.setArchive(false);
         classEntity.setModuleEntityList(modulos);
-        entityManager.persist(classEntity);
 
-        ClassEntity mock = createClass(classEntity);*/
-    }
+        return  classEntity;
 
-    @Test
-    void updateClassEntity() {
     }
 }
