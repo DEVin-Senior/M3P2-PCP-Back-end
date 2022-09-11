@@ -1,7 +1,9 @@
 package com.devinhouse.pcpbackend.service;
 
+import com.devinhouse.pcpbackend.dto.DashboardDto;
 import com.devinhouse.pcpbackend.model.WeekEntity;
 import com.devinhouse.pcpbackend.repository.WeekRepository;
+import com.devinhouse.pcpbackend.util.DashboardUtilTest;
 import com.devinhouse.pcpbackend.util.WeekUtilTest;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -23,6 +25,9 @@ import java.util.Optional;
 @ExtendWith(MockitoExtension.class)
 public class WeekServiceTest {
 
+    @Mock
+    private DashboardDto dashboardDtoMock;
+
    @Mock
    private WeekRepository weekRepositoryMock;
 
@@ -31,7 +36,10 @@ public class WeekServiceTest {
 
    private final WeekEntity expectedWeek = WeekUtilTest.expectedWeek();
 
-   @Test
+   private final DashboardDto expectedDashboard = DashboardUtilTest.expectedDashboard();
+
+
+    @Test
    @DisplayName("Deve retornar uma semana quando informado um id válido.")
    public void  shouldToSearchAWeekWithId() {
        // #1 to prepare
@@ -78,4 +86,17 @@ public class WeekServiceTest {
        // #3 to compare
        Mockito.verify(weekRepositoryMock, Mockito.times(1)).deleteById(1L);
    }
+
+    @Test
+    @DisplayName("Deve retornar uma lista de informações dashboard.")
+    public void shouldToReturnADashboardList() {
+        // #1 to prepare
+        var expectedDashboardList = List.of(expectedDashboard, expectedDashboard);
+        Mockito.when(dashboardDtoMock.toString()).thenReturn((expectedDashboardList).toString());
+        // #2 test method called
+        var realDashboardList = weekService.findAll();
+        // #3 to compare
+        Assertions.assertNotNull(realDashboardList);
+        // Assertions.assertEquals(expectedDashboardList, realDashboardList);
+    }
 }
