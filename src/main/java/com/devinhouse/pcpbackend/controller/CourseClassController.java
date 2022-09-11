@@ -79,7 +79,7 @@ public class CourseClassController {
 	}
 
 	@GetMapping("/listar/{id}")
-	public ResponseEntity<ClassReadDto> findById(@PathVariable Long id) {
+	public ResponseEntity<ClassUpdateDto> findById(@PathVariable Long id) {
 		try {
 			return ResponseEntity.ok().body(service.findById(id));
 		} catch (Exception e) {
@@ -91,4 +91,5 @@ public class CourseClassController {
 	public void updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto) {
 		service.setArchivedClass(archiveUpdateDto);
 	}
+
 }
