@@ -15,7 +15,7 @@ import com.devinhouse.pcpbackend.dto.EventReadDto;
 import com.devinhouse.pcpbackend.model.EventEntity;
 import com.devinhouse.pcpbackend.service.EventService;
 
-@RequestMapping("/historico")
+@RequestMapping("/historic")
 @RestController
 public class EventController {
 
@@ -32,7 +32,7 @@ public class EventController {
 		return ResponseEntity.ok().body(returnValue);
 	}
 
-	@GetMapping("/turmas/{id}")
+	@GetMapping("/classes/{id}")
 	public ResponseEntity<List<EventReadDto>> getEventByClassId(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "100") int limit, @PathVariable Long id) {
 		List<EventReadDto> returnValue = new ArrayList<>();
 		List<EventEntity> eventsEntity = eventService.getEventsByClassId(id, page, limit);
