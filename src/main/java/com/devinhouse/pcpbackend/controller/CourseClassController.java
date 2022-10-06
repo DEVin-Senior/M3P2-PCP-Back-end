@@ -29,7 +29,7 @@ import com.devinhouse.pcpbackend.dto.ClassUpdateDto;
 import com.devinhouse.pcpbackend.model.ClassEntity;
 import com.devinhouse.pcpbackend.service.ClassService;
 
-@RequestMapping("/turmas")
+@RequestMapping("/classes")
 @RestController
 public class CourseClassController {
 
@@ -66,7 +66,7 @@ public class CourseClassController {
 		}
 	}
 
-    @GetMapping("/listar")
+    @GetMapping("/list")
     public ResponseEntity<List<ClassReadDto>> findAll(@RequestParam(value = "page", defaultValue = "0") int page, @RequestParam(value = "limit", defaultValue = "100") int limit) {
         List<ClassReadDto> returnValue = new ArrayList<>();
         List<ClassEntity> classesEntity = service.findAll(page, limit);
@@ -74,7 +74,7 @@ public class CourseClassController {
         return ResponseEntity.ok().body(returnValue);
     }
 
-	@GetMapping("/listar/{id}")
+	@GetMapping("/list/{id}")
 	public ResponseEntity<ClassUpdateDto> findById(@PathVariable Long id) {
 		try {
 			return ResponseEntity.ok().body(service.findById(id));
@@ -83,7 +83,7 @@ public class CourseClassController {
 		}
 	}
     
-    @PatchMapping("/arquivar")
+    @PatchMapping("/tofile")
     public void updateArchived(@RequestBody @Valid ClassArchiveDto archiveUpdateDto) {
     	service.setArchivedClass(archiveUpdateDto);
     }
